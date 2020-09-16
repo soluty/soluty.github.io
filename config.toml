@@ -1,4 +1,4 @@
-baseURL = "http://localhost:1313/"
+baseURL = "http://soluty.cc/"
 languageCode = "zh-cn"
 title = "soluty"
 theme = "paper"
