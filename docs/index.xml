@@ -2,47 +2,47 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>soluty</title>
-    <link>http://soluty.cc/</link>
+    <link>https://soluty.cc/</link>
     <description>Recent content on soluty</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
     
-	<atom:link href="http://soluty.cc/index.xml" rel="self" type="application/rss+xml" />
+	<atom:link href="https://soluty.cc/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
       <title>Test2</title>
-      <link>http://soluty.cc/test2/</link>
+      <link>https://soluty.cc/test2/</link>
       <pubDate>Wed, 16 Sep 2020 10:22:49 +0800</pubDate>
       
-      <guid>http://soluty.cc/test2/</guid>
+      <guid>https://soluty.cc/test2/</guid>
       <description>etatate</description>
     </item>
     
     <item>
       <title>Test</title>
-      <link>http://soluty.cc/test/</link>
+      <link>https://soluty.cc/test/</link>
       <pubDate>Wed, 16 Sep 2020 09:50:59 +0800</pubDate>
       
-      <guid>http://soluty.cc/test/</guid>
+      <guid>https://soluty.cc/test/</guid>
       <description>测试专用</description>
     </item>
     
     <item>
       <title>xlog</title>
-      <link>http://soluty.cc/a_gomodule_xlog/</link>
+      <link>https://soluty.cc/a_gomodule_xlog/</link>
       <pubDate>Sun, 12 May 2019 12:14:34 +0600</pubDate>
       
-      <guid>http://soluty.cc/a_gomodule_xlog/</guid>
+      <guid>https://soluty.cc/a_gomodule_xlog/</guid>
       <description>it is xlog</description>
     </item>
     
     <item>
       <title></title>
-      <link>http://soluty.cc/learn_hugo/</link>
+      <link>https://soluty.cc/learn_hugo/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
-      <guid>http://soluty.cc/learn_hugo/</guid>
+      <guid>https://soluty.cc/learn_hugo/</guid>
       <description></description>
     </item>
     

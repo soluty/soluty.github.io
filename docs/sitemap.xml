@@ -3,35 +3,35 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
-    <loc>http://soluty.cc/test2/</loc>
+    <loc>https://soluty.cc/test2/</loc>
     <lastmod>2020-09-16T10:22:49+08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://soluty.cc/test/</loc>
+    <loc>https://soluty.cc/test/</loc>
     <lastmod>2020-09-16T09:50:59+08:00</lastmod>
   </url>
   
   <url>
-    <loc>http://soluty.cc/a_gomodule_xlog/</loc>
+    <loc>https://soluty.cc/a_gomodule_xlog/</loc>
     <lastmod>2019-05-12T12:14:34+06:00</lastmod>
   </url>
   
   <url>
-    <loc>http://soluty.cc/learn_hugo/</loc>
+    <loc>https://soluty.cc/learn_hugo/</loc>
     <priority>0</priority>
   </url>
   
   <url>
-    <loc>http://soluty.cc/categories/</loc>
+    <loc>https://soluty.cc/categories/</loc>
   </url>
   
   <url>
-    <loc>http://soluty.cc/</loc>
+    <loc>https://soluty.cc/</loc>
   </url>
   
   <url>
-    <loc>http://soluty.cc/tags/</loc>
+    <loc>https://soluty.cc/tags/</loc>
   </url>
   
 </urlset>
