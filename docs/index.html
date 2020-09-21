@@ -86,27 +86,19 @@
 
 <article class="first-entry">
   <header class="entry-header">
-    <h2>Test2</h2>
+    <h2>如何搭建自己域名的go模块</h2>
   </header>
   <section class="entry-content">
-   <p>etatate...</p>
+   <p>为什么不直接用github而需要搭建自己域名的go模块 从golang1.13以后，go mod基本上已经成为了go语言模块化的标准，越来越多的go项目都开始对go mod进行支持，及大的方便了go语言的应用开发以及代码共享。 有很多的开源项目都放在github上面做成go语言的模块，可以很方便的通过go get github.com/*/*来引用，但是还有一些情况下让我们没办法这样使用github来分享模块：
+ 如果是不开源的公司项目，恐怕没法分享到github上去，一般50人左右的公司，内网搭建一个小型的git服务是最方便的。 即使是个人开源的项目，也不一定非要通过github开源，首先github在国内某些网络环境下访问龟速，比如长宽这种，我家里图便宜用长宽，在github上下包的速度都是10k起往下降，甚至一度会断掉，我最试过长下一个67m的picgo，花了我3个小时。 绑定在个人域名下的项目，个人有极大的控制权，万一某gayhub被强了，或者某些代码库发疯封了你的代码（参考nodejs left-pad事件），你可以很方便的重建而不影响你的代码使用的客户。  怎么做 其实很简单，只需要在和你的模块名同名的网页的html的head标签中加上下面一句话即可。
+&lt;meta name=&#34;go-import&#34; content=&#34;${mod} git ${modurl}&#34;&gt;
+例如我有一个日志模块soluty.cc/xlog，模块代码托管在gitee上，url为https://gitee.com/soluty/xlog。 那么就需要在页面https://soluty.cc/xlog的head标签中加上 &lt;meta name=&#34;go-import&#34; content=&#34;soluty.cc/xlog git https://gitee.com/soluty/xlog&#34;&gt;
+一定要注意，你的页面必须为https的，不要用http，不要用http，不要用http。...</p>
   </section>
   <footer class="entry-footer">
     <time>September 16, 2020</time>
   </footer>
-  <a class="entry-link" href="https://soluty.cc/test2/"></a>
-</article>
-<article class="post-entry">
-  <header class="entry-header">
-    <h2>Test</h2>
-  </header>
-  <section class="entry-content">
-   <p>测试专用...</p>
-  </section>
-  <footer class="entry-footer">
-    <time>September 16, 2020</time>
-  </footer>
-  <a class="entry-link" href="https://soluty.cc/test/"></a>
+  <a class="entry-link" href="https://soluty.cc/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E5%9F%9F%E5%90%8D%E7%9A%84go%E6%A8%A1%E5%9D%97/"></a>
 </article>
 <article class="post-entry">
   <header class="entry-header">
@@ -119,18 +111,6 @@
     <time>May 12, 2019</time>
   </footer>
   <a class="entry-link" href="https://soluty.cc/xlog/"></a>
-</article>
-<article class="post-entry">
-  <header class="entry-header">
-    <h2></h2>
-  </header>
-  <section class="entry-content">
-   <p>...</p>
-  </section>
-  <footer class="entry-footer">
-    <time>January 1, 0001</time>
-  </footer>
-  <a class="entry-link" href="https://soluty.cc/learn_hugo/"></a>
 </article></main>
 <footer class="footer">
   <span>&copy; 2020 <a href="https://soluty.cc/">soluty</a></span>
