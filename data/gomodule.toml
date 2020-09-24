@@ -1,3 +1,6 @@
 [[mod]]
     name = "xlog"
     url = "https://gitee.com/soluty/xlog"
+[[mod]]
+    name = "viper-config"
+    url = "https://gitee.com/soluty/viper-config"

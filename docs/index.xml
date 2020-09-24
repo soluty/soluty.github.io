@@ -5,11 +5,7 @@
     <link>https://soluty.cc/</link>
     <description>Recent content on soluty</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language>
-    
-	<atom:link href="https://soluty.cc/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <language>zh-cn</language><atom:link href="https://soluty.cc/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>如何搭建自己域名的go模块</title>
       <link>https://soluty.cc/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E5%9F%9F%E5%90%8D%E7%9A%84go%E6%A8%A1%E5%9D%97/</link>
@@ -21,6 +17,15 @@
 &amp;lt;meta name=&amp;quot;go-import&amp;quot; content=&amp;quot;${mod} git ${modurl}&amp;quot;&amp;gt;
 例如我有一个日志模块soluty.cc/xlog，模块代码托管在gitee上，url为https://gitee.com/soluty/xlog。 那么就需要在页面https://soluty.cc/xlog的head标签中加上 &amp;lt;meta name=&amp;quot;go-import&amp;quot; content=&amp;quot;soluty.cc/xlog git https://gitee.com/soluty/xlog&amp;quot;&amp;gt;
 一定要注意，你的页面必须为https的，不要用http，不要用http，不要用http。</description>
+    </item>
+    
+    <item>
+      <title>viper-config</title>
+      <link>https://soluty.cc/viper-config/</link>
+      <pubDate>Sun, 12 May 2019 12:14:34 +0600</pubDate>
+      
+      <guid>https://soluty.cc/viper-config/</guid>
+      <description>这是一个用来生成viper初始化代码的配置工具.</description>
     </item>
     
     <item>
