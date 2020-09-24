@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Viper-configs on soluty</title>
+    <link>https://soluty.cc/viper-config/</link>
+    <description>Recent content in Viper-configs on soluty</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 12 May 2019 12:14:34 +0600</lastBuildDate>
+    
+	<atom:link href="https://soluty.cc/viper-config/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>viper-config</title>
+      <link>https://soluty.cc/viper-config/cmd/</link>
+      <pubDate>Sun, 12 May 2019 12:14:34 +0600</pubDate>
+      
+      <guid>https://soluty.cc/viper-config/cmd/</guid>
+      <description>这是一个用来生成viper初始化代码的配置工具.</description>
+    </item>
+    
+  </channel>
+</rss>

@@ -6,6 +6,7 @@
     <description>Recent content on soluty</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
+    <lastBuildDate>Sun, 12 May 2019 12:14:34 +0600</lastBuildDate>
     
 	<atom:link href="https://soluty.cc/index.xml" rel="self" type="application/rss+xml" />
     
@@ -29,6 +30,15 @@
       <pubDate>Sun, 12 May 2019 12:14:34 +0600</pubDate>
       
       <guid>https://soluty.cc/viper-config/</guid>
+      <description>这是一个用来生成viper初始化代码的配置工具.</description>
+    </item>
+    
+    <item>
+      <title>viper-config</title>
+      <link>https://soluty.cc/viper-config/cmd/</link>
+      <pubDate>Sun, 12 May 2019 12:14:34 +0600</pubDate>
+      
+      <guid>https://soluty.cc/viper-config/cmd/</guid>
       <description>这是一个用来生成viper初始化代码的配置工具.</description>
     </item>
     
