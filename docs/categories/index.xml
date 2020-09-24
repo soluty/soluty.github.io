@@ -5,6 +5,10 @@
     <link>https://soluty.cc/categories/</link>
     <description>Recent content in Categories on soluty</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language><atom:link href="https://soluty.cc/categories/index.xml" rel="self" type="application/rss+xml" />
+    <language>zh-cn</language>
+    
+	<atom:link href="https://soluty.cc/categories/index.xml" rel="self" type="application/rss+xml" />
+    
+    
   </channel>
 </rss>
