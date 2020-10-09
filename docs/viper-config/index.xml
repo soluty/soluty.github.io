@@ -6,11 +6,7 @@
     <description>Recent content in Viper-configs on soluty</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-cn</language>
-    <lastBuildDate>Sun, 12 May 2019 12:14:34 +0600</lastBuildDate>
-    
-	<atom:link href="https://soluty.cc/viper-config/index.xml" rel="self" type="application/rss+xml" />
-    
-    
+    <lastBuildDate>Sun, 12 May 2019 12:14:34 +0600</lastBuildDate><atom:link href="https://soluty.cc/viper-config/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>viper-config</title>
       <link>https://soluty.cc/viper-config/cmd/</link>
