@@ -1,0 +1,277 @@
+---
+title: "Go语言尝试整洁架构的项目clean Welcome"
+date: 2020-10-09T17:08:27+08:00
+draft: true
+---
+
+前段时间看了Bob大叔于2012年发布的博客[The Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)，并且写了一篇[翻译](https://soluty.cc/%E6%95%B4%E6%B4%81%E6%9E%B6%E6%9E%84/)，这篇博客中介绍了一种架构的思路叫做整洁架构，感觉很有些用处，但是又感觉有些不是太能得其精髓，所以在go语言中尝试了一下整洁架构。
+
+项目名clean-welcome，完整项目位于https://gitee.com/soluty/clean-welcome。
+
+## 项目功能和特点
+
+该项目只有一个功能，就是对输入的名字，添加 Hello进行输出，比如输入World,则输出Hello World 有些类似于linux中著名的命令cowsay的功能，当然没有那么丰富。为了使用到数据库，我们假设这个输出非常耗时，所以我们将输入的名字通过数据库进行了缓存，如果数据库中存在，那么直接输出，否则需要通过2秒中的运算(项目中用Sleep来模拟)才能给出结果，并将结果缓存到数据库中。为了体现整洁架构独立于UI,独立于数据库的特性，该项目支持http请求，支持websocket请求，支持rpcx的rpc请求，支持gui,控制台命令，和控制台ui。并且为了体现独立于数据库，该项目通过sqlx,gorm等框架支持关系型数据库，通过qmgo支持mongodb, 并且支持redis和内存中的map作为数据库。
+
+## 项目分层和目录结构
+
+根据整洁架构的思路，项目粗略分为4层，从内到外分别为domain, usecase, adapter和infra，每一层一个文件夹，分别对应Bob原文中的entity,usecase，interface adapter和framework and driver层。因为这个假想项目的业务逻辑十分简单，所以domain层只有一个单独的结构体Hello,它有两个字段Name和Msg分别对应输入的名字和输出的welcome消息。在adapter和infra层中有两个对应的主要目录io和repo, 分别对应clean架构的独立的ui和独立的数据库，这里的io代表输入和输出，一般而言，输入输出都是成对出现的，比如做一个api服务器，一般是http协议通过json格式的输入，同样也是一般输出json的格式，如果是传统的mvc的web框架，那么一般是controller作为输入，view或者说presenter则作为输出。或者说命令行程序中，一般是参数或者子命令作为输入，输出到标准输出，一般是屏幕控制台。 我将目前常见的io做了分类，共分为console,gui,http,rpc,tui,websocket这6大类，分别涵盖了命令行程序，gui程序，terminal ui程序，3种最主流协议的web应用(http,websocket,自定义rpc)，并且每一类都可以选择不同的framework, 我在每一类都挑选了一个用的人相对多的框架，例如用[cobra](https://github.com/spf13/cobra)做命令行程序，[wails](https://wails.app)做gui程序，[gin](https://gin-gonic.com/zh-cn/)作为提供http协议的web框架，[nhooyr](https://github.com/nhooyr/websocket)作为提供websocket协议的框架，[rpcx](https://rpcx.io/)作为rpc框架。 这正设计完美的体现了证据架构，独立于ui,独立于框架的思想，在项目核心不用改变的情况下，项目可以作为各种ui来呈现，并且如果某个框架有bug或者功能不满足需求，其中的框架也是可以通过修改adapter和infra层而替换的。repo和io类似，持久层方面我将其分为了sql和kv两类十分常见的db, 还有一些其他的数据库比如mongodb之类的作为ohter。每一类都可以选用不同的orm框架或者驱动不用，比如sql数据库，我选择了两个go世界中使用的非常多的sqlx和gorm来做实现。
+
+## usecase(用例层)
+usecase层比domain层稍微复杂一些，包内3个文件app_itf_input.go,app_itf_repo.go和app_itf_other.go 中分组定义了app的所有接口，app_itf_input.go中定义了该应用中唯一的输入HelloInput接口，并且通过Input接口将其聚合。代码如下:
+
+```
+type Input interface {
+	HelloInput
+}
+
+type HelloInput interface {
+	Hello(in pb.Input, out *pb.Output)
+}
+```
+app_itf_repo.go中定义了clean架构中通常使用的repo pattern的所有repo，这是应用与数据库持久层的桥梁。业务比较简单所以只定义了两个接口，如下：
+
+```
+//go:generate pegomock generate HelloRepo --output-dir mock --mock-name HelloRepo
+type HelloRepo interface {
+	GetByName(name string) (*domain.Hello, error)
+	Save(*domain.Hello)
+}
+```
+
+另一个app_itf_other.go 则是通过接口封装定义了一些其它的三方代码或者外界信息，对于这个假想的项目而言，我们假想了一个需求，就是敏感词屏蔽功能，对于有些输入而言，我们的系统需要屏蔽掉，接口定义如下：
+
+```
+//go:generate pegomock generate SensitiveWords --output-dir mock --mock-name SensitiveWords
+type SensitiveWords interface {
+	IsSensitiveWords(string) (bool, error)
+}
+
+```
+项目采用[pegomock](https://github.com/petergtz/pegomock)作为mock框架来模拟接口的输出，所以除了input接口代表了我们整个应用的所有业务逻辑没有mock以外，其他的接口顶上都有一个go:generate的注视来生成mock接口。
+
+## adapter层
+这一层包含各种io,repo的实现，还有第三方的敏感词屏蔽的实现，因为这个应用只是用来演示我对整洁架构的理解，所以只是自己简单实现了一下敏感词屏蔽。
+
+对于io而言，这一层中每一个实现一般都包含一个用于初始化或者常用的注册处理函数用的handler.go和一个实际用到的处理函数hello.go, 这一层几乎不包含业务逻辑，主要是从各种输入或者框架中转换出usecase所需要的数据接口，调用usecase里的方法，然后将方法的返回重新构造成需要的输出，以http的gin框架为例。
+
+handler.go文件如下:
+```
+type Handler struct {
+	app usecase.Input
+}
+
+func NewHandler(app usecase.Input) *Handler {
+	r := &Handler{
+		app: app,
+	}
+	return r
+}
+
+func (r *Handler) Init(e gin.IRouter) {
+	e.GET("/hello", r.Hello)
+}
+```
+hello.go文件如下:
+```
+func (r *Handler) Hello(c *gin.Context) {
+	name := c.Query("name")
+	log.Debug("Handler Hello: name=%v", name)
+	in := pb.Input{
+		Msg: &pb.Input_InputHello{
+			InputHello: &pb.InputHello{
+				Name: name,
+			},
+		},
+	}
+	out := &pb.Output{}
+	r.app.Hello(in, out)
+	if out.Error != nil {
+		c.Error(errors.New(out.Error.Msg))
+		return
+	}
+	c.String(200, out.GetOutputHello().Msg)
+}
+```
+可以看到，io的包中所有的函数都只承担数据结构转换的作用，最后实际调用的一定是usecase层来做业务逻辑。其它的io adapter实现也很类似，具体实现可以看我在gitee上的开源项目[clean-welcome](https://gitee.com/soluty/clean-welcome)
+
+repo的实现思路和io类似，每个不同的数据库框架都用一个目录，每个目录中都是一个init.go文件做一些初始化数据库以后做的事情，比如自动创建数据库表这种， 然后还有hello.go文件中则是对usecase中定义的repo接口的实现，在repo主目录中还有一个factory.go方法通过简单工厂模式，将这些repo联合起来。
+
+## infra层
+
+infra层就是clean架构中的framework and driver层，它负责所有的使用到的框架的细节，这一层主要有5个目录，config,log,wire还有io和repo。其中config目录提供一个大的结构体，将所有可能的配置都塞到该结构体中，并且通过我写的[viper-config]()工具，利用go生态中广泛使用的[viper]()库来加载配置。我比较喜欢集中化的配置，就是一个大的配置中能够看到所有app可能的配置，有些人喜欢配置分模块，但是这个并不影响，clean架构只是一种思路，具体如何实现都可以换成自己想要的。除了配置意外，还有log目录调用我封装的[xlog](https://soluty.cc/xlog)做了一个简单的日志实现。除此之外，在wire目录中，我利用google的[wire]()项目实现了依赖注入。config和log是我认为每个项目都必须要有的，依赖注入则不必，但也能帮助减少main函数中的代码。
+
+最主要的则是io和repo目录，这两个目录通过简单工厂和定义接口实现了ui独立和数据库独立，比如io包中有一个子包io_itf定义了Server接口
+
+```
+type Server interface {
+	Start() error
+}
+```
+
+并且io包中的server.go的文件实现了工厂函数Create
+```
+func Create(cfg config.Config, app usecase.Input) (io_itf.Server, error) {
+	var s io_itf.Server
+	var err error
+	log.Debug("create server %v", cfg.Dialect.Io)
+	switch cfg.Dialect.Io {
+	case "Http_Gin":
+		s, err = http.NewServerGin(cfg, app)
+	case "Http_Std":
+		s = http.NewServerStd(cfg, app)
+	case "Rpc_Rpcx":
+		s = rpc.NewServerRpcx(cfg, app)
+	case "Websocket_Nhooyr":
+		s = websocket.NewServerNhooyr(cfg, app)
+	case "Console_Cobra":
+		s = console.NewServerCobra(cfg, app)
+	case "Gui_Wails":
+		s = gui.NewServerWails(cfg, app)
+	case "Tui_Gocui":
+		s = tui.NewServerGocui(cfg, app)
+	default:
+		err = errors.New("xx")
+	}
+	return s, err
+}
+```
+通过配置则可以自由的切换到底是使用哪个UI, 至于每一个UI具体的实现则在对应的子包中对应文件。
+
+repo包的实现也类似，在db_itf子包中定义一个数据库的接口DbAdapter
+```
+type DbAdapter interface {
+	Type() string
+	Sqlx() *sqlx.DB
+	Memory() map[string]string
+	Gorm() *gorm.DB
+	Redis() redis.Cmdable
+	Qmgo() *qmgo.QmgoClient
+}
+```
+并且有一个简单工厂函数在repo包的repo.go文件中
+
+```
+func Create(cfg config.Config, cb func(adapter db_itf.DbAdapter) error) (db_itf.DbAdapter, error) {
+	switch cfg.Dialect.Repo {
+	case "Sql_Sqlx":
+		return sql.InitSqlxRepo(cfg, cb)
+	case "Sql_Gorm":
+		return sql.InitGormRepo(cfg, cb)
+	case "Kv_Redis":
+		return kv.InitRedisRepo(cfg, cb)
+	case "Kv_Memory":
+		return kv.InitMemoryRepo(cfg, cb)
+	case "Other_Qmgo":
+		return other.InitQmgoRepo(cfg, cb)
+	}
+	return nil, errors.New("不认识的类型")
+}
+```
+还是一样通过配置切换repo的实现，至于细节则在各个子包中。
+
+在这一层之中，需要将初始化并且设置各种框架的细节，并且通过配置来做一些可能的修改。这一层需要对各种框架，但是完全不涉及到业务的逻辑，也就是说，假如编写了一个驱动sqlx的框架代码，那么其它任意的项目都可以用这个代码，而不需要修改驱动层。
+
+## 跨层传输的数据
+
+clean架构中强调跨层传输的数据要么是简单的数据结构，要么就偏向外层知道内层的数据。 所以这里domain层和usecase层通过接口定义中包含domain的结构来传输数据，而usecase层和adapter层则通过protobuf来传输数据。在usecase包中有一个子包io, 包中有gen_unix.go和gen_windows.go用来在主流系统中使用protobuf将
+proto目录中的io.proto和hello.proto转化到为go的结构体。之所以用proto格式主要是它兼容json并且本身对数据有一定的子解释的作用。io.proto文件中，定义了3个主要的数据结构，一个Input代表所有可能的输入，一个Output代表所有的输出，而Error则代表可能的错误。并且通过import来引入其他模块，这里是hello.proto。
+
+```
+syntax = "proto3";
+
+// protoc 安装见 https://github.com/protocolbuffers/protobuf-go
+// protoc-gen-go 安装 go install google.golang.org/protobuf/cmd/protoc-gen-go
+
+import "proto/hello.proto";
+
+option go_package = ".;pb";
+
+package pb;
+
+message Input {
+    oneof Msg {
+        InputHello InputHello = 1;
+    }
+}
+
+message Output {
+    Error error = 1;
+    oneof Msg {
+        OutputHello OutputHello = 2;
+    }
+}
+
+message Error {
+    int32 err = 1;
+    string msg = 2;
+}
+```
+hello.proto中则具体定义了唯一的一个usecase的输入和输出，也都非常简单。
+
+```
+syntax = "proto3";
+
+option go_package = ".;pb";
+
+package pb;
+
+message InputHello {
+    string Name = 1;
+}
+
+message OutputHello {
+    string Msg = 1;
+}
+
+```
+至于adapter层和infra层除了需要调用几个工厂方法以外，并不需要其它数据的传递。
+
+## main函数
+main函数非常简单，就是读取配置，初始化Server接口， 然后Start
+
+```
+func main() {
+	var serverName = "Http_Gin"
+	var repoName = "Sql_Sqlx"
+	cfg := &config.Config{
+		Dialect: struct {
+			Io   string
+			Repo string
+		}{Io: serverName, Repo: repoName},
+	}
+	cfg.Repo.Sql.Sqlx.Driver = "sqlite3"
+	cfg.Io.Http.Gin.Port = 8080
+	server, err := wire.InitServer(*cfg)
+	if err != nil {
+		log.Error(err)
+		os.Exit(1)
+		return
+	}
+
+	err = server.Start()
+	if err != nil {
+		os.Exit(1)
+	}
+}
+```
+
+
+## 架构的优缺点
+优点有很多， 例如从app_itf_input.go中，我们就可以看出整个app所能提供的功能，比如我们的clean-welcome中由于只有一个HelloInput接口中的一个方法，所以我们只有一个say hello的功能。通过在根目录下运行go generate ./...，可以生成所有的配置，mock, pb.go, wire等文件。还有整个架构做到了UI free和 Db free, 真正的是利用框架而未被框架绑定。 每一层都可以单独测试。比如用sqlmock测试adapter中的repo, 用pegomock来模拟其它接口来测试input。clean架构总结的以下5个特点在该项目中都有体现。
+
+1. 独立于框架。架构不依赖已存在的功能丰富的框架。这使得你可以将这些框架作为工具，而不是让你的系统受这些框架的限制。
+2. 可测试。业务规则可以爱没有ui,数据库，web服务器或者其他外部元素的情况下进行测试。
+3. 独立于UI。UI可以很容易改变，而不需要改变系统的其他部分。例如，在不改变业务规则的情况下，一个Web的UI可以很容易被一个Console的UI替换。
+4. 独立于数据库。你可以使用Oracle或者SQL Server, 或者 Mongo, BigTable, CouchDB等等。你的业务规则不受数据库的约束。
+5. 独立于任何的外部机构。事实上你的业务规则不知道任何外界的情况。
+
+至于缺点，其中最大的缺点是太过复杂，假设应用要新增加一个功能，比如加法功能，并且假设这个加法计算比较慢，也是有缓存的，(没有什么为什么，用户的想法总是捉摸不定)，那么需要修改哪些文件呢？首先usecase层需要在app_itf_input.go文件中新增AddInput接口，并且需要io/proto下增加add.proto中输入和输出的定义，并且修改io.proto增加一行import "proto/add.proto"，app_itf_repo.go中增加一个AddRepo的接口，并且在app.go中Repo结构体新增一行AddRepo, 然后新增一个add.go文件来实现AddInput, 光用例层就涉及到6个文件的修改。
+adapter层需要新增两过文件作为io和repo的接口实现，infra层需要在wire.go中的repoSet变量中增加一行`
+wire.FieldsOf(new(*usecase.Repo), "AddRepo"),`。
+可以看到，新增一个功能，我们需要修改至少9个样版文件，好处是这9个文件的修改都非常简单，除了真正的业务代码以外，其它的基本都是ctrl+c ctrl+v然后稍微改一改，所以理论上是可以通过分析go的ast用工具来生成的。
+
+## 架构可能的改进
+因为只是对整洁架构的一个小小尝试，所以实际的项目中根据项目的不同，可能还有一些可以改进的地方。比如proto中目前只定义了每个单独的请求参数，而对所有请求公共的参数省略掉了，比如大部分时候，我们web应用中一般来说希望请求会带一个唯一id, 而响应则将请求的唯一id回传，这样客户端就知道到底服务器是响应的哪个请求来做自己的处理。又比如在一般的网络游戏中，除了注册和登陆以外，大部分游戏内容都需要传一个用户id来表明是哪个用户，并且游戏这种强交互的应用，一个用户的输入通常会输出到多个用户，比如一个打牌的游戏，某个用户出一张牌，那么牌桌上所有用户都是应该能看到他出了这张牌。那么这种情况，Output的设计则可以是repeated。
+
+由于用的简单的工厂函数，所以如果架构中支持的ui和db越多，则引用的库也越多，这个可以通过go语言的编译tag来做一些适当的改进。
+
