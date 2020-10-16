@@ -8,6 +8,15 @@
     <language>zh-cn</language>
     <lastBuildDate>Sun, 12 May 2019 12:14:34 +0600</lastBuildDate><atom:link href="https://soluty.cc/index.xml" rel="self" type="application/rss+xml" />
     <item>
+      <title>xsys</title>
+      <link>https://soluty.cc/xsys/</link>
+      <pubDate>Sat, 17 Oct 2020 01:22:45 +0800</pubDate>
+      
+      <guid>https://soluty.cc/xsys/</guid>
+      <description>这个仓库搜集跨3大主流桌面系统mac,windows,linux的系统函数。</description>
+    </item>
+    
+    <item>
       <title>systray</title>
       <link>https://soluty.cc/systray/</link>
       <pubDate>Sat, 17 Oct 2020 00:43:13 +0800</pubDate>

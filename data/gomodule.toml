@@ -7,3 +7,6 @@
 [[mod]]
     name = "systray"
     url = "https://gitee.com/soluty/systray"
+[[mod]]
+    name = "xsys"
+    url = "https://gitee.com/soluty/xsys"
