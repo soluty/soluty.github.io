@@ -4,3 +4,6 @@
 [[mod]]
     name = "viper-config"
     url = "https://gitee.com/soluty/viper-config"
+[[mod]]
+    name = "systray"
+    url = "https://gitee.com/soluty/systray"
