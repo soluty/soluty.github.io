@@ -2,7 +2,6 @@
 title: "systray"
 description: "gomodule"
 date: 2020-10-17T00:43:13+08:00
-draft: false
 ---
 
 该仓库是fork的项目github.com/getlantern/systray，由于那个项目有几个私有的函数，我在做go语言ui程序的时候需要用到，所以对其做了一些小小的改动。主要包括两点：

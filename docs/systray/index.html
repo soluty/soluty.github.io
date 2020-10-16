@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <title>systray - soluty</title>
+    
+    <meta name="description" content="该仓库是fork的项目github.com/getlantern/systray，由于那个项目有几个私有的函数，我在做go语言ui程序的时候需要用到，所以对其做了一些小小的改动。主要包括两点：
+ 将私有的nativeLoop函数修改成公有的NativeLoop 将Quit函数中只能执行一次的限制去掉，这样可以反复退出， 配合wails则可以用go开发一个带有托盘功能的跨3大主流桌面平台的gui app.  systray is a cross-platform Go library to place an icon and menu in the notification area.
+Features  Supported on Windows, macOS, and Linux Menu items can be checked and/or disabled Methods may be called from any Goroutine  API func main() { systray.Run(onReady, onExit) } func onReady() { systray.SetIcon(icon.Data) systray.SetTitle(&#34;Awesome App&#34;) systray.SetTooltip(&#34;Pretty awesome超级棒&#34;) mQuit := systray.AddMenuItem(&#34;Quit&#34;, &#34;Quit the whole app&#34;) // Sets the icon of a menu item.">
+    <meta name="author" content="">
+
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+        <meta name="go-import" content="soluty.cc/systray git https://gitee.com/soluty/systray ">
+        
+      
+    
+
+    
+    <link href="https://soluty.cc/an-old-hope.min.css" rel="stylesheet">
+    <link href="https://soluty.cc/style.css" rel="stylesheet">
+    <link href="https://soluty.cc/custom.css" rel="stylesheet">
+    
+    <link rel="apple-touch-icon" href="https://soluty.cc/apple-touch-icon.png">
+    <link rel="icon" href="https://soluty.cc/favicon.ico">
+    <meta name="generator" content="Hugo 0.75.1" />
+    
+    
+    
+    <script>
+      function setTheme() {
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.body.classList.add('dark');
+          return;
+        }
+
+        const time = new Date();
+        const prev = localStorage.getItem('date');
+        const date = String(time.getMonth() + 1) + '.' + String(time.getDate());
+
+        const now = time.getTime();
+        let sunrise;
+        let sunset;
+
+        function setBodyClass() {
+          if (now > sunrise && now < sunset) return;
+          document.body.classList.add('dark');
+        }
+
+        if (date !== prev) {
+          fetch('https://api.ipgeolocation.io/astronomy?apiKey=5ed37d85103e4defa5df4c5298ed5215')
+            .then((res) => res.json())
+            .then((data) => {
+              sunrise = data.sunrise.split(':').map(Number);
+              sunset = data.sunset.split(':').map(Number);
+            })
+            .catch(() => {
+              sunrise = [7, 0];
+              sunset = [19, 0];
+            })
+            .finally(() => {
+              sunrise = time.setHours(sunrise[0], sunrise[1], 0);
+              sunset = time.setHours(sunset[0], sunset[1], 0);
+              setBodyClass();
+              localStorage.setItem('sunrise', sunrise);
+              localStorage.setItem('sunset', sunset);
+            });
+          localStorage.setItem('date', date);
+        } else {
+          sunrise = Number(localStorage.getItem('sunrise'));
+          sunset = Number(localStorage.getItem('sunset'));
+          setBodyClass();
+        }
+      }
+    </script>
+  </head>
+  <body class="single">
+    <script>
+      setTheme();
+    </script>
+    <header class="header">
+      <nav class="nav">
+        <p class="logo"><a href="https://soluty.cc/">soluty</a></p>
+      </nav>
+    </header>
+    <main class="main">
+
+
+<article class="post-single">
+  <header class="post-header">
+    <h1 class="post-title">systray</h1>
+    <div class="post-meta">October 17, 2020</div>
+  </header>
+  <div class="post-content"><p>该仓库是fork的项目github.com/getlantern/systray，由于那个项目有几个私有的函数，我在做go语言ui程序的时候需要用到，所以对其做了一些小小的改动。主要包括两点：</p>
+<ol>
+<li>将私有的nativeLoop函数修改成公有的NativeLoop</li>
+<li>将Quit函数中只能执行一次的限制去掉，这样可以反复退出， 配合wails则可以用go开发一个带有托盘功能的跨3大主流桌面平台的gui app.</li>
+</ol>
+<p>systray is a cross-platform Go library to place an icon and menu in the notification area.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li>Supported on Windows, macOS, and Linux</li>
+<li>Menu items can be checked and/or disabled</li>
+<li>Methods may be called from any Goroutine</li>
+</ul>
+<h2 id="api">API</h2>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-go" data-lang="go"><span style="color:#66d9ef">func</span> <span style="color:#a6e22e">main</span>() {
+	<span style="color:#a6e22e">systray</span>.<span style="color:#a6e22e">Run</span>(<span style="color:#a6e22e">onReady</span>, <span style="color:#a6e22e">onExit</span>)
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">onReady</span>() {
+	<span style="color:#a6e22e">systray</span>.<span style="color:#a6e22e">SetIcon</span>(<span style="color:#a6e22e">icon</span>.<span style="color:#a6e22e">Data</span>)
+	<span style="color:#a6e22e">systray</span>.<span style="color:#a6e22e">SetTitle</span>(<span style="color:#e6db74">&#34;Awesome App&#34;</span>)
+	<span style="color:#a6e22e">systray</span>.<span style="color:#a6e22e">SetTooltip</span>(<span style="color:#e6db74">&#34;Pretty awesome超级棒&#34;</span>)
+	<span style="color:#a6e22e">mQuit</span> <span style="color:#f92672">:=</span> <span style="color:#a6e22e">systray</span>.<span style="color:#a6e22e">AddMenuItem</span>(<span style="color:#e6db74">&#34;Quit&#34;</span>, <span style="color:#e6db74">&#34;Quit the whole app&#34;</span>)
+
+	<span style="color:#75715e">// Sets the icon of a menu item. Only available on Mac and Windows.
+</span><span style="color:#75715e"></span>	<span style="color:#a6e22e">mQuit</span>.<span style="color:#a6e22e">SetIcon</span>(<span style="color:#a6e22e">icon</span>.<span style="color:#a6e22e">Data</span>)
+}
+
+<span style="color:#66d9ef">func</span> <span style="color:#a6e22e">onExit</span>() {
+	<span style="color:#75715e">// clean up here
+</span><span style="color:#75715e"></span>}
+</code></pre></div><p>See <a href="https://pkg.go.dev/github.com/getlantern/systray?tab=doc">full API</a> as well as <a href="https://github.com/getlantern/systray/tree/master/CHANGELOG.md">CHANGELOG</a>.</p>
+<h2 id="try-the-example-app">Try the example app!</h2>
+<p>Have go v1.12+ or higher installed? Here&rsquo;s an example to get started on macOS:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">git clone https://github.com/getlantern/systray
+cd example
+env GO111MODULE<span style="color:#f92672">=</span>on go build
+./example
+</code></pre></div><p>On Windows, you should build like this:</p>
+<pre><code>env GO111MODULE=on go build -ldflags &quot;-H=windowsgui&quot;
+</code></pre><p>The following text will then appear on the console:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">go: finding github.com/skratchdot/open-golang latest
+go: finding github.com/getlantern/systray latest
+go: finding github.com/getlantern/golog latest
+</code></pre></div><p>Now look for <em>Awesome App</em> in your menu bar!</p>
+<p><img src="example/screenshot.png" alt="Awesome App screenshot"></p>
+<h2 id="the-webview-example">The Webview example</h2>
+<p>The code under <code>webview_example</code> is to demostrate how it can co-exist with other UI elements. Note that the example doesn&rsquo;t work on macOS versions older than 10.15 Catalina.</p>
+<h2 id="platform-notes">Platform notes</h2>
+<h3 id="linux">Linux</h3>
+<ul>
+<li>Building apps requires gcc as well as the <code>gtk3</code> and <code>libappindicator3</code> development headers to be installed. For Debian or Ubuntu, you may install these using:</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">sudo apt-get install gcc libgtk-3-dev libappindicator3-dev
+</code></pre></div><p>On Linux Mint, <code>libxapp-dev</code> is also required .</p>
+<p>To build <code>webview_example</code>, you also need to install <code>libwebkit2gtk-4.0-dev</code> and remove <code>webview_example/rsrc.syso</code> which is required on Windows.</p>
+<ul>
+<li>Submenu and checked menu items are not yet implemented</li>
+</ul>
+<h3 id="windows">Windows</h3>
+<ul>
+<li>To avoid opening a console at application startup, use these compile flags:</li>
+</ul>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-sh" data-lang="sh">go build -ldflags -H<span style="color:#f92672">=</span>windowsgui
+</code></pre></div><h3 id="macos">macOS</h3>
+<p>On macOS, you will need to create an application bundle to wrap the binary; simply folders with the following minimal structure and assets:</p>
+<pre><code>SystrayApp.app/
+  Contents/
+    Info.plist
+    MacOS/
+      go-executable
+    Resources/
+      SystrayApp.icns
+</code></pre><p>When running as an app bundle, you may want to add one or both of the following to your Info.plist:</p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-xml" data-lang="xml"><span style="color:#75715e">&lt;!-- avoid having a blurry icon and text --&gt;</span>
+	<span style="color:#f92672">&lt;key&gt;</span>NSHighResolutionCapable<span style="color:#f92672">&lt;/key&gt;</span>
+	<span style="color:#f92672">&lt;string&gt;</span>True<span style="color:#f92672">&lt;/string&gt;</span>
+
+	<span style="color:#75715e">&lt;!-- avoid showing the app on the Dock --&gt;</span>
+	<span style="color:#f92672">&lt;key&gt;</span>LSUIElement<span style="color:#f92672">&lt;/key&gt;</span>
+	<span style="color:#f92672">&lt;string&gt;</span>1<span style="color:#f92672">&lt;/string&gt;</span>
+</code></pre></div><p>Consult the <a href="https://developer.apple.com/library/archive/documentation/CoreFoundation/Conceptual/CFBundles/BundleTypes/BundleTypes.html#//apple_ref/doc/uid/10000123i-CH101-SW1">Official Apple Documentation here</a>.</p>
+<h2 id="credits">Credits</h2>
+<ul>
+<li><a href="https://github.com/xilp/systray">https://github.com/xilp/systray</a></li>
+<li><a href="https://github.com/cratonica/trayhost">https://github.com/cratonica/trayhost</a></li>
+</ul>
+</div>
+  
+</article></main>
+<footer class="footer">
+  <span>&copy; 2020 <a href="https://soluty.cc/">soluty</a></span>
+  <span>&middot;</span>
+  <span>Powered by <a href="https://gohugo.io/" rel="noopener" target="_blank">Hugo️️</a>️</span>
+  <span>&middot;</span>
+  <span>Theme️ <a href="https://github.com/nanxiaobei/hugo-paper" rel="noopener" target="_blank">Paper</a></span>
+</footer>
+<script src="https://soluty.cc/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+</body>
+</html>
+

@@ -15,6 +15,8 @@
     
       
     
+      
+    
 
     
     <link href="https://soluty.cc/an-old-hope.min.css" rel="stylesheet">
@@ -88,6 +90,20 @@
 
 <article class="first-entry">
   <header class="entry-header">
+    <h2>systray</h2>
+  </header>
+  <section class="entry-content">
+   <p>该仓库是fork的项目github.com/getlantern/systray，由于那个项目有几个私有的函数，我在做go语言ui程序的时候需要用到，所以对其做了一些小小的改动。主要包括两点：
+ 将私有的nativeLoop函数修改成公有的NativeLoop 将Quit函数中只能执行一次的限制去掉，这样可以反复退出， 配合wails则可以用go开发一个带有托盘功能的跨3大主流桌面平台的gui app.  systray is a cross-platform Go library to place an icon and menu in the notification area.
+Features  Supported on Windows, macOS, and Linux Menu items can be checked and/or disabled Methods may be called from any Goroutine  API func main() { systray.Run(onReady, onExit) } func onReady() { systray.SetIcon(icon.Data) systray.SetTitle(&#34;Awesome App&#34;) systray.SetTooltip(&#34;Pretty awesome超级棒&#34;) mQuit := systray.AddMenuItem(&#34;Quit&#34;, &#34;Quit the whole app&#34;) // Sets the icon of a menu item....</p>
+  </section>
+  <footer class="entry-footer">
+    <time>October 17, 2020</time>
+  </footer>
+  <a class="entry-link" href="https://soluty.cc/systray/"></a>
+</article>
+<article class="post-entry">
+  <header class="entry-header">
     <h2>整洁架构</h2>
   </header>
   <section class="entry-content">
@@ -117,7 +133,7 @@
 哪些数据可以跨越边界 通常情况下，跨越边界的数据是简单的数据结构。你可以使用基本数据结构或者简单的数据传输对象。或者数据可以是函数调用中的参数。你也可以将其打包成一个map或者将其组织成一个对象。重要的是，跨边界的数据必须是 孤立的，简单的数据结构。我们不希望偷懒传递实体或者数据库的行。我们不希望数据结构有任何的打破依赖规则的依赖关系。
 例如，很多的数据库框架都会返回一个方便的便于响应后续查询的数据结构。我们可以把它叫做行结构。我们不希望跨边界传递行结构。这将打破依赖规则，因为他会迫使内圈知道一些外圈的事情。
 所以当我们跨边界传递数据时，总是以对内圈方便的数据结构进行传递。
-结论 遵循这些简单的规则并不难，而且会让你在今后的工作中省去很多麻烦。通过将软件分成不同的层，并遵守依赖规则，你将创建一个本质上可测试的系统，并且有着上面所有的好处。当系统中任何外部的部分变得过时， 如数据库或者web框架，你可以用最少的代码体会这些过时的元素。...</p>
+结论 遵循这些简单的规则并不难，而且会让你在今后的工作中省去很多麻烦。通过将软件分成不同的层，并遵守依赖规则，你将创建一个本质上可测试的系统，并且有着上面所有的好处。当系统中任何外部的部分变得过时， 如数据库或者web框架，你可以用最少的代码替换这些过时的元素。...</p>
   </section>
   <footer class="entry-footer">
     <time>October 9, 2020</time>
