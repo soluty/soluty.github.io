@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <title>如何搭建自己域名的go模块 - soluty</title>
+    
+    <meta name="description" content="为什么不直接用github而需要搭建自己域名的go模块 从golang1.13以后，go mod基本上已经成为了go语言模块化的标准，越来越多的go项目都开始对go mod进行支持，及大的方便了go语言的应用开发以及代码共享。 有很多的开源项目都放在github上面做成go语言的模块，可以很方便的通过go get github.com/*/*来引用，但是还有一些情况下让我们没办法这样使用github来分享模块：
+ 如果是不开源的公司项目，恐怕没法分享到github上去，一般50人左右的公司，内网搭建一个小型的git服务是最方便的。 即使是个人开源的项目，也不一定非要通过github开源，首先github在国内某些网络环境下访问龟速，比如长宽这种，我家里图便宜用长宽，在github上下包的速度都是10k起往下降，甚至一度会断掉，我最试过长下一个67m的picgo，花了我3个小时。 绑定在个人域名下的项目，个人有极大的控制权，万一某gayhub被强了，或者某些代码库发疯封了你的代码（参考nodejs left-pad事件），你可以很方便的重建而不影响你的代码使用的客户。  怎么做 其实很简单，只需要在和你的模块名同名的网页的html的head标签中加上下面一句话即可。
+&lt;meta name=&quot;go-import&quot; content=&quot;${mod} git ${modurl}&quot;&gt;
+例如我有一个日志模块soluty.cc/xlog，模块代码托管在gitee上，url为https://gitee.com/soluty/xlog。 那么就需要在页面https://soluty.cc/xlog的head标签中加上 &lt;meta name=&quot;go-import&quot; content=&quot;soluty.cc/xlog git https://gitee.com/soluty/xlog&quot;&gt;
+一定要注意，你的页面必须为https的，不要用http，不要用http，不要用http。">
+    <meta name="author" content="">
+
+    
+      
+    
+      
+    
+
+    
+    <link href="https://soluty.cc/an-old-hope.min.css" rel="stylesheet">
+    <link href="https://soluty.cc/style.css" rel="stylesheet">
+    <link href="https://soluty.cc/custom.css" rel="stylesheet">
+    
+    <link rel="apple-touch-icon" href="https://soluty.cc/apple-touch-icon.png">
+    <link rel="icon" href="https://soluty.cc/favicon.ico">
+    <meta name="generator" content="Hugo 0.75.1" />
+    
+    
+    
+    <script>
+      function setTheme() {
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.body.classList.add('dark');
+          return;
+        }
+
+        const time = new Date();
+        const prev = localStorage.getItem('date');
+        const date = String(time.getMonth() + 1) + '.' + String(time.getDate());
+
+        const now = time.getTime();
+        let sunrise;
+        let sunset;
+
+        function setBodyClass() {
+          if (now > sunrise && now < sunset) return;
+          document.body.classList.add('dark');
+        }
+
+        if (date !== prev) {
+          fetch('https://api.ipgeolocation.io/astronomy?apiKey=5ed37d85103e4defa5df4c5298ed5215')
+            .then((res) => res.json())
+            .then((data) => {
+              sunrise = data.sunrise.split(':').map(Number);
+              sunset = data.sunset.split(':').map(Number);
+            })
+            .catch(() => {
+              sunrise = [7, 0];
+              sunset = [19, 0];
+            })
+            .finally(() => {
+              sunrise = time.setHours(sunrise[0], sunrise[1], 0);
+              sunset = time.setHours(sunset[0], sunset[1], 0);
+              setBodyClass();
+              localStorage.setItem('sunrise', sunrise);
+              localStorage.setItem('sunset', sunset);
+            });
+          localStorage.setItem('date', date);
+        } else {
+          sunrise = Number(localStorage.getItem('sunrise'));
+          sunset = Number(localStorage.getItem('sunset'));
+          setBodyClass();
+        }
+      }
+    </script>
+  </head>
+  <body class="single">
+    <script>
+      setTheme();
+    </script>
+    <header class="header">
+      <nav class="nav">
+        <p class="logo"><a href="https://soluty.cc/">soluty</a></p>
+      </nav>
+    </header>
+    <main class="main">
+
+
+<article class="post-single">
+  <header class="post-header">
+    <h1 class="post-title">如何搭建自己域名的go模块</h1>
+    <div class="post-meta">September 16, 2020</div>
+  </header>
+  <div class="post-content"><h3 id="为什么不直接用github而需要搭建自己域名的go模块">为什么不直接用github而需要搭建自己域名的go模块</h3>
+<p>从golang1.13以后，go mod基本上已经成为了go语言模块化的标准，越来越多的go项目都开始对go mod进行支持，及大的方便了go语言的应用开发以及代码共享。
+有很多的开源项目都放在github上面做成go语言的模块，可以很方便的通过<code>go get github.com/*/*</code>来引用，但是还有一些情况下让我们没办法这样使用github来分享模块：</p>
+<ol>
+<li>如果是不开源的公司项目，恐怕没法分享到github上去，一般50人左右的公司，内网搭建一个小型的git服务是最方便的。</li>
+<li>即使是个人开源的项目，也不一定非要通过github开源，首先github在国内某些网络环境下访问龟速，比如长宽这种，我家里图便宜用长宽，在github上下包的速度都是10k起往下降，甚至一度会断掉，我最试过长下一个67m的picgo，花了我3个小时。</li>
+<li>绑定在个人域名下的项目，个人有极大的控制权，万一某gayhub被强了，或者某些代码库发疯封了你的代码（参考nodejs left-pad事件），你可以很方便的重建而不影响你的代码使用的客户。</li>
+</ol>
+<h3 id="怎么做">怎么做</h3>
+<p>其实很简单，只需要在和你的模块名同名的网页的html的head标签中加上下面一句话即可。</p>
+<p><code>&lt;meta name=&quot;go-import&quot; content=&quot;${mod} git ${modurl}&quot;&gt;</code></p>
+<p>例如我有一个日志模块<code>soluty.cc/xlog</code>，模块代码托管在gitee上，url为<code>https://gitee.com/soluty/xlog</code>。
+那么就需要在页面<code>https://soluty.cc/xlog</code>的head标签中加上
+<code>&lt;meta name=&quot;go-import&quot; content=&quot;soluty.cc/xlog git https://gitee.com/soluty/xlog&quot;&gt;</code></p>
+<p>一定要注意，你的页面必须为https的，不要用http，不要用http，不要用http。</p>
+</div>
+  
+</article></main>
+<footer class="footer">
+  <span>&copy; 2020 <a href="https://soluty.cc/">soluty</a></span>
+  <span>&middot;</span>
+  <span>Powered by <a href="https://gohugo.io/" rel="noopener" target="_blank">Hugo️️</a>️</span>
+  <span>&middot;</span>
+  <span>Theme️ <a href="https://github.com/nanxiaobei/hugo-paper" rel="noopener" target="_blank">Paper</a></span>
+</footer>
+<script src="https://soluty.cc/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+</body>
+</html>
+
