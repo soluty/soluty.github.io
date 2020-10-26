@@ -5,8 +5,7 @@
     <link>https://soluty.cc/</link>
     <description>Recent content on soluty</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language>
-    <lastBuildDate>Sun, 12 May 2019 12:14:34 +0600</lastBuildDate><atom:link href="https://soluty.cc/index.xml" rel="self" type="application/rss+xml" />
+    <language>zh-cn</language><atom:link href="https://soluty.cc/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>xsys</title>
       <link>https://soluty.cc/xsys/</link>
@@ -81,16 +80,12 @@ Features  Supported on Windows, macOS, and Linux Menu items can be checked and/o
       <pubDate>Sun, 12 May 2019 12:14:34 +0600</pubDate>
       
       <guid>https://soluty.cc/viper-config/</guid>
-      <description>这是一个用来生成viper初始化代码的配置工具.</description>
-    </item>
-    
-    <item>
-      <title>viper-config</title>
-      <link>https://soluty.cc/viper-config/cmd/</link>
-      <pubDate>Sun, 12 May 2019 12:14:34 +0600</pubDate>
-      
-      <guid>https://soluty.cc/viper-config/cmd/</guid>
-      <description>这是一个用来生成viper初始化代码的配置工具.</description>
+      <description>介绍 使用viper的配置编写和读取小工具，映射一个大的Config对象, 简化viper读取配置的编写
+安装 go install soluty.cc/viper-config
+使用说明 假设在config目录中有一个config.go文件， 其中定义一个类型为Config如下
+type Config struct{ A int B string } 那么在该目录中调用viper-config config -p ${package} 即可生成config_gen_Config.go
+其它地方调用生成的Init方法即可。为了方便，也可以放在go:generate中调用。
+wishlist  目前不能直接映射time.Time结构体 没有封装写方法  </description>
     </item>
     
     <item>

@@ -77,7 +77,7 @@ The code under `webview_example` is to demostrate how it can co-exist with other
 
 ## Platform notes
 
-### Linux
+### Linuxq
 
 * Building apps requires gcc as well as the `gtk3` and `libappindicator3` development headers to be installed. For Debian or Ubuntu, you may install these using:
 
