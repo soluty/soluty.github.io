@@ -1,7 +1,7 @@
 ---
 title: "go"
 description: "gomodule"
-date: 2019-05-12T12:14:34+06:00
+date: 2020-10-17T01:22:45+08:00
 ---
 
-it is goon
+gogogo
