@@ -11,7 +11,6 @@
  将私有的nativeLoop函数修改成公有的NativeLoop 将Quit函数中只能执行一次的限制去掉，这样可以反复退出， 配合wails则可以用go开发一个带有托盘功能的跨3大主流桌面平台的gui app.  systray is a cross-platform Go library to place an icon and menu in the notification area.
 Features  Supported on Windows, macOS, and Linux Menu items can be checked and/or disabled Methods may be called from any Goroutine  API func main() { systray.Run(onReady, onExit) } func onReady() { systray.SetIcon(icon.Data) systray.SetTitle(&#34;Awesome App&#34;) systray.SetTooltip(&#34;Pretty awesome超级棒&#34;) mQuit := systray.AddMenuItem(&#34;Quit&#34;, &#34;Quit the whole app&#34;) // Sets the icon of a menu item.">
     <meta name="author" content="">
-
     
       
         
@@ -23,7 +22,11 @@ Features  Supported on Windows, macOS, and Linux Menu items can be checked and/o
     
       
         
-        <meta name="go-import" content="soluty.cc/systray git https://gitee.com/soluty/systray ">
+        <meta name="go-import" content="soluty.cc/systray git https://gitee.com/soluty/systray.git ">
+        
+      
+    
+      
         
       
     
@@ -39,7 +42,7 @@ Features  Supported on Windows, macOS, and Linux Menu items can be checked and/o
     
     <link rel="apple-touch-icon" href="https://soluty.cc/apple-touch-icon.png">
     <link rel="icon" href="https://soluty.cc/favicon.ico">
-    <meta name="generator" content="Hugo 0.75.1" />
+    <meta name="generator" content="Hugo 0.77.0" />
     
     
     
@@ -197,7 +200,7 @@ go: finding github.com/getlantern/golog latest
   
 </article></main>
 <footer class="footer">
-  <span>&copy; 2020 <a href="https://soluty.cc/">soluty</a></span>
+  <span>&copy; 2021 <a href="https://soluty.cc/">soluty</a></span>
   <span>&middot;</span>
   <span>Powered by <a href="https://gohugo.io/" rel="noopener" target="_blank">Hugo️️</a>️</span>
   <span>&middot;</span>

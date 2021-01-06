@@ -14,12 +14,11 @@
     <meta name="description" content="{{ .Site.Params.description }}">
     <meta name="author" content="{{ .Site.Author.name }}">
     {{- end }}
-
     {{ range $i, $v := .Site.Data.gomodule.mod }}
       {{ if eq $.Description "gomodule" }}
-        {{ if eq $.Title $v.name }}
-        <meta name="go-import" content="soluty.cc/{{ $v.name }} git {{ $v.url }} ">
-        {{ end }}
+        <!-- {{ if eq $.Title $v.name }} -->
+        <meta name="go-import" content="soluty.cc/{{ $v.name }} git {{ $v.url }}.git ">
+        <!-- {{ end }} -->
       {{ end }}
     {{ end }}
 

@@ -5,7 +5,8 @@
     <link>https://soluty.cc/</link>
     <description>Recent content on soluty</description>
     <generator>Hugo -- gohugo.io</generator>
-    <language>zh-cn</language><atom:link href="https://soluty.cc/index.xml" rel="self" type="application/rss+xml" />
+    <language>zh-cn</language>
+    <lastBuildDate>Sun, 12 May 2019 12:14:34 +0600</lastBuildDate><atom:link href="https://soluty.cc/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>xsys</title>
       <link>https://soluty.cc/xsys/</link>
@@ -72,6 +73,15 @@ Features  Supported on Windows, macOS, and Linux Menu items can be checked and/o
 &amp;lt;meta name=&amp;quot;go-import&amp;quot; content=&amp;quot;${mod} git ${modurl}&amp;quot;&amp;gt;
 例如我有一个日志模块soluty.cc/xlog，模块代码托管在gitee上，url为https://gitee.com/soluty/xlog。 那么就需要在页面https://soluty.cc/xlog的head标签中加上 &amp;lt;meta name=&amp;quot;go-import&amp;quot; content=&amp;quot;soluty.cc/xlog git https://gitee.com/soluty/xlog&amp;quot;&amp;gt;
 一定要注意，你的页面必须为https的，不要用http，不要用http，不要用http。</description>
+    </item>
+    
+    <item>
+      <title>go</title>
+      <link>https://soluty.cc/go/goon/</link>
+      <pubDate>Sun, 12 May 2019 12:14:34 +0600</pubDate>
+      
+      <guid>https://soluty.cc/go/goon/</guid>
+      <description>it is goon</description>
     </item>
     
     <item>

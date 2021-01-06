@@ -10,3 +10,6 @@
 [[mod]]
     name = "xsys"
     url = "https://gitee.com/soluty/xsys"
+[[mod]]
+    name = "go"
+    url = "https://gitee.com/soluty/go"
