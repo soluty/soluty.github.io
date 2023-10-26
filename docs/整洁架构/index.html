@@ -9,9 +9,9 @@
     
     <meta name="description" content="本文翻译自Bob大叔的The Clean Architecture
 过去几年里，我们看到了一系列关于系统架构的想法。包括：
- 六变形架构 洋葱圈架构 Screaming-Architecture DCI(data, context, interaction) BCE(boundary, control, entity)  虽然这些架构在细节上都有些不同，但它们非常相似。它们都有同样的目标，那就是分离关注点。它们都是通过把软件分层来实现这种分离。每个架构都至少有一层用于业务规则，还有一层用于接口。
+六变形架构 洋葱圈架构 Screaming-Architecture DCI(data, context, interaction) BCE(boundary, control, entity) 虽然这些架构在细节上都有些不同，但它们非常相似。它们都有同样的目标，那就是分离关注点。它们都是通过把软件分层来实现这种分离。每个架构都至少有一层用于业务规则，还有一层用于接口。
 所有这些架构构建的系统都有以下特征：
- 独立于框架。架构不依赖已存在的功能丰富的框架。这使得你可以将这些框架作为工具，而不是让你的系统受这些框架的限制。 可测试。业务规则可以爱没有ui,数据库，web服务器或者其他外部元素的情况下进行测试。 独立于UI。UI可以很容易改变，而不需要改变系统的其他部分。例如，在不改变业务规则的情况下，一个Web的UI可以很容易被一个Console的UI替换。 独立于数据库。你可以使用Oracle或者SQL Server, 或者 Mongo, BigTable, CouchDB等等。你的业务规则不受数据库的约束。 独立于任何的外部机构。事实上你的业务规则不知道任何外界的情况。  本文顶部的图是试图将所有这些架构整合成一个可行的想法。
+独立于框架。架构不依赖已存在的功能丰富的框架。这使得你可以将这些框架作为工具，而不是让你的系统受这些框架的限制。 可测试。业务规则可以爱没有ui,数据库，web服务器或者其他外部元素的情况下进行测试。 独立于UI。UI可以很容易改变，而不需要改变系统的其他部分。例如，在不改变业务规则的情况下，一个Web的UI可以很容易被一个Console的UI替换。 独立于数据库。你可以使用Oracle或者SQL Server, 或者 Mongo, BigTable, CouchDB等等。你的业务规则不受数据库的约束。 独立于任何的外部机构。事实上你的业务规则不知道任何外界的情况。 本文顶部的图是试图将所有这些架构整合成一个可行的想法。
 依赖规则 同心圆代表软件的不同领域。一般来说，越往里走，软件的层次越高。外圈是机制，内圈是策略。
 使得这个架构发挥作用的首要规则是依赖规则。这个规则是源代码的依赖只能是外圈依赖内圈。内圈中的对象不能知道外圈中的任何信息。特别是，外圈中声明的任何名字不能被内圈中的代码提及，包括函数，类，变了或者其他 命名的软件实体。
 同样的道理，外圈中使用的数据格式不应该在内圈中被使用，尤其是这些格式是通过外圈中的某些框架生成的时候。我们不希望任何外圈的东西能影响到内圈。
@@ -54,7 +54,7 @@
     
     <link rel="apple-touch-icon" href="https://soluty.cc/apple-touch-icon.png">
     <link rel="icon" href="https://soluty.cc/favicon.ico">
-    <meta name="generator" content="Hugo 0.77.0" />
+    <meta name="generator" content="Hugo 0.119.0">
     
     
     
@@ -120,7 +120,7 @@
 <article class="post-single">
   <header class="post-header">
     <h1 class="post-title">整洁架构</h1>
-    <div class="post-meta">October 9, 2020</div>
+    <div class="post-meta">October 26, 2023</div>
   </header>
   <div class="post-content"><p>本文翻译自Bob大叔的<a href="https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html">The Clean Architecture</a></p>
 <p><img src="https://blog.cleancoder.com/uncle-bob/images/2012-08-13-the-clean-architecture/CleanArchitecture.jpg" alt="">
@@ -184,7 +184,7 @@ Presenter，View和Controller都属于这一层。模型很可能只是一些数
   
 </article></main>
 <footer class="footer">
-  <span>&copy; 2021 <a href="https://soluty.cc/">soluty</a></span>
+  <span>&copy; 2023 <a href="https://soluty.cc/">soluty</a></span>
   <span>&middot;</span>
   <span>Powered by <a href="https://gohugo.io/" rel="noopener" target="_blank">Hugo️️</a>️</span>
   <span>&middot;</span>

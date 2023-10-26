@@ -28,7 +28,7 @@
     
     <link rel="apple-touch-icon" href="https://soluty.cc/apple-touch-icon.png">
     <link rel="icon" href="https://soluty.cc/favicon.ico">
-    <meta name="generator" content="Hugo 0.77.0" />
+    <meta name="generator" content="Hugo 0.119.0">
     
     <link rel="alternate" type="application/rss+xml" href="https://soluty.cc/categories/index.xml" title="soluty" />
     
@@ -93,52 +93,14 @@
 
 <article class="post-entry">
   <header class="entry-header">
-    <h2>go</h2>
-  </header>
-  <section class="entry-content">
-   <p>gogogo...</p>
-  </section>
-  <footer class="entry-footer">
-    <time>October 17, 2020</time>
-  </footer>
-  <a class="entry-link" href="https://soluty.cc/go/"></a>
-</article>
-<article class="post-entry">
-  <header class="entry-header">
-    <h2>xsys</h2>
-  </header>
-  <section class="entry-content">
-   <p>这个仓库搜集跨3大主流桌面系统mac,windows,linux的系统函数。...</p>
-  </section>
-  <footer class="entry-footer">
-    <time>October 17, 2020</time>
-  </footer>
-  <a class="entry-link" href="https://soluty.cc/xsys/"></a>
-</article>
-<article class="post-entry">
-  <header class="entry-header">
-    <h2>systray</h2>
-  </header>
-  <section class="entry-content">
-   <p>该仓库是fork的项目github.com/getlantern/systray，由于那个项目有几个私有的函数，我在做go语言ui程序的时候需要用到，所以对其做了一些小小的改动。主要包括两点：
- 将私有的nativeLoop函数修改成公有的NativeLoop 将Quit函数中只能执行一次的限制去掉，这样可以反复退出， 配合wails则可以用go开发一个带有托盘功能的跨3大主流桌面平台的gui app.  systray is a cross-platform Go library to place an icon and menu in the notification area.
-Features  Supported on Windows, macOS, and Linux Menu items can be checked and/or disabled Methods may be called from any Goroutine  API func main() { systray.Run(onReady, onExit) } func onReady() { systray.SetIcon(icon.Data) systray.SetTitle(&#34;Awesome App&#34;) systray.SetTooltip(&#34;Pretty awesome超级棒&#34;) mQuit := systray.AddMenuItem(&#34;Quit&#34;, &#34;Quit the whole app&#34;) // Sets the icon of a menu item....</p>
-  </section>
-  <footer class="entry-footer">
-    <time>October 17, 2020</time>
-  </footer>
-  <a class="entry-link" href="https://soluty.cc/systray/"></a>
-</article>
-<article class="post-entry">
-  <header class="entry-header">
     <h2>整洁架构</h2>
   </header>
   <section class="entry-content">
    <p>本文翻译自Bob大叔的The Clean Architecture
 过去几年里，我们看到了一系列关于系统架构的想法。包括：
- 六变形架构 洋葱圈架构 Screaming-Architecture DCI(data, context, interaction) BCE(boundary, control, entity)  虽然这些架构在细节上都有些不同，但它们非常相似。它们都有同样的目标，那就是分离关注点。它们都是通过把软件分层来实现这种分离。每个架构都至少有一层用于业务规则，还有一层用于接口。
+六变形架构 洋葱圈架构 Screaming-Architecture DCI(data, context, interaction) BCE(boundary, control, entity) 虽然这些架构在细节上都有些不同，但它们非常相似。它们都有同样的目标，那就是分离关注点。它们都是通过把软件分层来实现这种分离。每个架构都至少有一层用于业务规则，还有一层用于接口。
 所有这些架构构建的系统都有以下特征：
- 独立于框架。架构不依赖已存在的功能丰富的框架。这使得你可以将这些框架作为工具，而不是让你的系统受这些框架的限制。 可测试。业务规则可以爱没有ui,数据库，web服务器或者其他外部元素的情况下进行测试。 独立于UI。UI可以很容易改变，而不需要改变系统的其他部分。例如，在不改变业务规则的情况下，一个Web的UI可以很容易被一个Console的UI替换。 独立于数据库。你可以使用Oracle或者SQL Server, 或者 Mongo, BigTable, CouchDB等等。你的业务规则不受数据库的约束。 独立于任何的外部机构。事实上你的业务规则不知道任何外界的情况。  本文顶部的图是试图将所有这些架构整合成一个可行的想法。
+独立于框架。架构不依赖已存在的功能丰富的框架。这使得你可以将这些框架作为工具，而不是让你的系统受这些框架的限制。 可测试。业务规则可以爱没有ui,数据库，web服务器或者其他外部元素的情况下进行测试。 独立于UI。UI可以很容易改变，而不需要改变系统的其他部分。例如，在不改变业务规则的情况下，一个Web的UI可以很容易被一个Console的UI替换。 独立于数据库。你可以使用Oracle或者SQL Server, 或者 Mongo, BigTable, CouchDB等等。你的业务规则不受数据库的约束。 独立于任何的外部机构。事实上你的业务规则不知道任何外界的情况。 本文顶部的图是试图将所有这些架构整合成一个可行的想法。
 依赖规则 同心圆代表软件的不同领域。一般来说，越往里走，软件的层次越高。外圈是机制，内圈是策略。
 使得这个架构发挥作用的首要规则是依赖规则。这个规则是源代码的依赖只能是外圈依赖内圈。内圈中的对象不能知道外圈中的任何信息。特别是，外圈中声明的任何名字不能被内圈中的代码提及，包括函数，类，变了或者其他 命名的软件实体。
 同样的道理，外圈中使用的数据格式不应该在内圈中被使用，尤其是这些格式是通过外圈中的某些框架生成的时候。我们不希望任何外圈的东西能影响到内圈。
@@ -163,25 +125,23 @@ Features  Supported on Windows, macOS, and Linux Menu items can be checked and/o
 结论 遵循这些简单的规则并不难，而且会让你在今后的工作中省去很多麻烦。通过将软件分成不同的层，并遵守依赖规则，你将创建一个本质上可测试的系统，并且有着上面所有的好处。当系统中任何外部的部分变得过时， 如数据库或者web框架，你可以用最少的代码替换这些过时的元素。...</p>
   </section>
   <footer class="entry-footer">
-    <time>October 9, 2020</time>
+    <time>October 26, 2023</time>
   </footer>
   <a class="entry-link" href="https://soluty.cc/%E6%95%B4%E6%B4%81%E6%9E%B6%E6%9E%84/"></a>
 </article>
 <article class="post-entry">
   <header class="entry-header">
-    <h2>如何搭建自己域名的go模块</h2>
+    <h2>systray</h2>
   </header>
   <section class="entry-content">
-   <p>为什么不直接用github而需要搭建自己域名的go模块 从golang1.13以后，go mod基本上已经成为了go语言模块化的标准，越来越多的go项目都开始对go mod进行支持，及大的方便了go语言的应用开发以及代码共享。 有很多的开源项目都放在github上面做成go语言的模块，可以很方便的通过go get github.com/*/*来引用，但是还有一些情况下让我们没办法这样使用github来分享模块：
- 如果是不开源的公司项目，恐怕没法分享到github上去，一般50人左右的公司，内网搭建一个小型的git服务是最方便的。 即使是个人开源的项目，也不一定非要通过github开源，首先github在国内某些网络环境下访问龟速，比如长宽这种，我家里图便宜用长宽，在github上下包的速度都是10k起往下降，甚至一度会断掉，我最试过长下一个67m的picgo，花了我3个小时。 绑定在个人域名下的项目，个人有极大的控制权，万一某gayhub被强了，或者某些代码库发疯封了你的代码（参考nodejs left-pad事件），你可以很方便的重建而不影响你的代码使用的客户。  怎么做 其实很简单，只需要在和你的模块名同名的网页的html的head标签中加上下面一句话即可。
-&lt;meta name=&#34;go-import&#34; content=&#34;${mod} git ${modurl}&#34;&gt;
-例如我有一个日志模块soluty.cc/xlog，模块代码托管在gitee上，url为https://gitee.com/soluty/xlog。 那么就需要在页面https://soluty.cc/xlog的head标签中加上 &lt;meta name=&#34;go-import&#34; content=&#34;soluty.cc/xlog git https://gitee.com/soluty/xlog&#34;&gt;
-一定要注意，你的页面必须为https的，不要用http，不要用http，不要用http。...</p>
+   <p>该仓库是fork的项目github.com/getlantern/systray，由于那个项目有几个私有的函数，我在做go语言ui程序的时候需要用到，所以对其做了一些小小的改动。主要包括两点：
+将私有的nativeLoop函数修改成公有的NativeLoop 将Quit函数中只能执行一次的限制去掉，这样可以反复退出， 配合wails则可以用go开发一个带有托盘功能的跨3大主流桌面平台的gui app. systray is a cross-platform Go library to place an icon and menu in the notification area.
+Features Supported on Windows, macOS, and Linux Menu items can be checked and/or disabled Methods may be called from any Goroutine API func main() { systray.Run(onReady, onExit) } func onReady() { systray.SetIcon(icon.Data) systray.SetTitle(&#34;Awesome App&#34;) systray.SetTooltip(&#34;Pretty awesome超级棒&#34;) mQuit := systray.AddMenuItem(&#34;Quit&#34;, &#34;Quit the whole app&#34;) // Sets the icon of a menu item....</p>
   </section>
   <footer class="entry-footer">
-    <time>September 16, 2020</time>
+    <time>October 17, 2020</time>
   </footer>
-  <a class="entry-link" href="https://soluty.cc/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E5%9F%9F%E5%90%8D%E7%9A%84go%E6%A8%A1%E5%9D%97/"></a>
+  <a class="entry-link" href="https://soluty.cc/systray/"></a>
 </article>
 <article class="post-entry">
   <header class="entry-header">
@@ -193,27 +153,15 @@ Features  Supported on Windows, macOS, and Linux Menu items can be checked and/o
 使用说明 假设在config目录中有一个config.go文件， 其中定义一个类型为Config如下
 type Config struct{ A int B string } 那么在该目录中调用viper-config config -p ${package} 即可生成config_gen_Config.go
 其它地方调用生成的Init方法即可。为了方便，也可以放在go:generate中调用。
-wishlist  目前不能直接映射time.Time结构体 没有封装写方法  ...</p>
+wishlist 目前不能直接映射time.Time结构体 没有封装写方法 ...</p>
   </section>
   <footer class="entry-footer">
     <time>May 12, 2019</time>
   </footer>
   <a class="entry-link" href="https://soluty.cc/viper-config/"></a>
-</article>
-<article class="post-entry">
-  <header class="entry-header">
-    <h2>xlog</h2>
-  </header>
-  <section class="entry-content">
-   <p>it is xlog 1...</p>
-  </section>
-  <footer class="entry-footer">
-    <time>May 12, 2019</time>
-  </footer>
-  <a class="entry-link" href="https://soluty.cc/xlog/"></a>
 </article></main>
 <footer class="footer">
-  <span>&copy; 2021 <a href="https://soluty.cc/">soluty</a></span>
+  <span>&copy; 2023 <a href="https://soluty.cc/">soluty</a></span>
   <span>&middot;</span>
   <span>Powered by <a href="https://gohugo.io/" rel="noopener" target="_blank">Hugo️️</a>️</span>
   <span>&middot;</span>

@@ -1,52 +1,20 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
-  
-  <url>
-    <loc>https://soluty.cc/go/</loc>
-    <lastmod>2020-10-17T01:22:45+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://soluty.cc/xsys/</loc>
-    <lastmod>2020-10-17T01:22:45+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://soluty.cc/systray/</loc>
-    <lastmod>2020-10-17T00:43:13+08:00</lastmod>
-  </url>
-  
   <url>
     <loc>https://soluty.cc/%E6%95%B4%E6%B4%81%E6%9E%B6%E6%9E%84/</loc>
-    <lastmod>2020-10-09T11:26:46+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://soluty.cc/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E5%9F%9F%E5%90%8D%E7%9A%84go%E6%A8%A1%E5%9D%97/</loc>
-    <lastmod>2020-09-16T19:46:18+08:00</lastmod>
-  </url>
-  
-  <url>
+    <lastmod>2023-10-26T11:26:46+08:00</lastmod>
+  </url><url>
+    <loc>https://soluty.cc/systray/</loc>
+    <lastmod>2020-10-17T00:43:13+08:00</lastmod>
+  </url><url>
     <loc>https://soluty.cc/viper-config/</loc>
     <lastmod>2019-05-12T12:14:34+06:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>https://soluty.cc/xlog/</loc>
-    <lastmod>2019-05-12T12:14:34+06:00</lastmod>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://soluty.cc/categories/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://soluty.cc/</loc>
-  </url>
-  
-  <url>
+  </url><url>
     <loc>https://soluty.cc/tags/</loc>
   </url>
-  
 </urlset>
