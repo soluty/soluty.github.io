@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Soluty | Find Your Solution</title>
-    <link>http://soluty.cc/</link>
-    <description>Recent content on Soluty | Find Your Solution</description>
+    <title>Soluty&#39;s Blog on Soluty | Find Your Solution</title>
+    <link>http://soluty.cc/blog/</link>
+    <description>Recent content in Soluty&#39;s Blog on Soluty | Find Your Solution</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh-CN</language>
-    <lastBuildDate>Tue, 07 Nov 2023 13:33:00 +0800</lastBuildDate>
-    <atom:link href="http://soluty.cc/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Mon, 23 Dec 2019 20:17:01 +0600</lastBuildDate>
+    <atom:link href="http://soluty.cc/blog/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>契约式编程</title>
       <link>http://soluty.cc/blog/%E5%A5%91%E7%BA%A6%E5%BC%8F%E7%BC%96%E7%A8%8B/</link>
@@ -44,13 +44,6 @@
       <description>在编程的过程中,如何检验一断逻辑或者一个函数是否按照预期的来运行,一般情况下都是通过编写单元测试来实</description>
     </item>
     <item>
-      <title>在neovim中快速运行一小段代码(动态语言篇)</title>
-      <link>http://soluty.cc/%E5%9C%A8neovim%E4%B8%AD%E5%BF%AB%E9%80%9F%E8%BF%90%E8%A1%8C%E4%B8%80%E5%B0%8F%E6%AE%B5%E4%BB%A3%E7%A0%81%E5%8A%A8%E6%80%81%E8%AF%AD%E8%A8%80%E7%AF%87/</link>
-      <pubDate>Mon, 06 Nov 2023 11:24:46 +0800</pubDate>
-      <guid>http://soluty.cc/%E5%9C%A8neovim%E4%B8%AD%E5%BF%AB%E9%80%9F%E8%BF%90%E8%A1%8C%E4%B8%80%E5%B0%8F%E6%AE%B5%E4%BB%A3%E7%A0%81%E5%8A%A8%E6%80%81%E8%AF%AD%E8%A8%80%E7%AF%87/</guid>
-      <description>在编程的过程中,如何检验一断逻辑或者一个函数是否按照预期的来运行,一般情况下都是通过编写单元测试来实</description>
-    </item>
-    <item>
       <title>如何搭建自己域名的go模块</title>
       <link>http://soluty.cc/blog/%E5%A6%82%E4%BD%95%E6%90%AD%E5%BB%BA%E8%87%AA%E5%B7%B1%E5%9F%9F%E5%90%8D%E7%9A%84go%E6%A8%A1%E5%9D%97/</link>
       <pubDate>Thu, 26 Oct 2023 19:46:18 +0800</pubDate>
@@ -84,60 +77,6 @@
       <pubDate>Fri, 09 Oct 2020 17:08:27 +0800</pubDate>
       <guid>http://soluty.cc/blog/go%E8%AF%AD%E8%A8%80%E5%B0%9D%E8%AF%95%E6%95%B4%E6%B4%81%E6%9E%B6%E6%9E%84%E7%9A%84%E9%A1%B9%E7%9B%AEclean-welcome/</guid>
       <description>前段时间看了Bob大叔于2012年发布的博客The Clean Architecture，并且写了一篇翻译，这篇</description>
-    </item>
-    <item>
-      <title>KIO-TAPE BRAND</title>
-      <link>http://soluty.cc/projbackup/kio-tape-2/</link>
-      <pubDate>Mon, 23 Dec 2019 20:56:42 +0600</pubDate>
-      <guid>http://soluty.cc/projbackup/kio-tape-2/</guid>
-      <description>The “Seamless Watch” watch has all the features that users expect in a digital watch, and some unusual features.
-The watch has the following features:
-Time and date displayed on the screen. Current time is in large numbers, date is in small numbers above it.
-Light: Pressing the light button on the side of the watch activates a light while the button is pressed.</description>
-    </item>
-    <item>
-      <title>USE-LESS BRAND</title>
-      <link>http://soluty.cc/projbackup/use-less-brand/</link>
-      <pubDate>Mon, 23 Dec 2019 15:58:10 +0600</pubDate>
-      <guid>http://soluty.cc/projbackup/use-less-brand/</guid>
-      <description>The “Seamless Watch” watch has all the features that users expect in a digital watch, and some unusual features.
-The watch has the following features:
-Time and date displayed on the screen. Current time is in large numbers, date is in small numbers above it.
-Light: Pressing the light button on the side of the watch activates a light while the button is pressed.</description>
-    </item>
-    <item>
-      <title>&lt;&lt;大航海时代:海上霸主&gt;&gt;</title>
-      <link>http://soluty.cc/portfolio/%E5%A4%A7%E8%88%AA%E6%B5%B7/</link>
-      <pubDate>Mon, 23 Dec 2019 15:56:43 +0600</pubDate>
-      <guid>http://soluty.cc/portfolio/%E5%A4%A7%E8%88%AA%E6%B5%B7/</guid>
-      <description>&amp;laquo;大航海时代:海上霸主&amp;raquo;是 https://www.pexels.com/</description>
-    </item>
-    <item>
-      <title>OSEN CLOCK</title>
-      <link>http://soluty.cc/projbackup/osen-clock/</link>
-      <pubDate>Mon, 23 Dec 2019 15:56:43 +0600</pubDate>
-      <guid>http://soluty.cc/projbackup/osen-clock/</guid>
-      <description>11The “Seamless Watch” watch has all the features that users expect in a digital watch, and some unusual features.</description>
-    </item>
-    <item>
-      <title>SEAMLESS WATCH</title>
-      <link>http://soluty.cc/projbackup/seamless-watch/</link>
-      <pubDate>Mon, 23 Dec 2019 15:55:44 +0600</pubDate>
-      <guid>http://soluty.cc/projbackup/seamless-watch/</guid>
-      <description>The “Seamless Watch” watch has all the features that users expect in a digital watch, and some unusual features.
-The watch has the following features:
-Time and date displayed on the screen. Current time is in large numbers, date is in small numbers above it.
-Light: Pressing the light button on the side of the watch activates a light while the button is pressed.</description>
-    </item>
-    <item>
-      <title>KIO TAPE</title>
-      <link>http://soluty.cc/projbackup/kio-tape/</link>
-      <pubDate>Mon, 23 Dec 2019 15:44:46 +0600</pubDate>
-      <guid>http://soluty.cc/projbackup/kio-tape/</guid>
-      <description>The “Seamless Watch” watch has all the features that users expect in a digital watch, and some unusual features.
-The watch has the following features:
-Time and date displayed on the screen. Current time is in large numbers, date is in small numbers above it.
-Light: Pressing the light button on the side of the watch activates a light while the button is pressed.</description>
     </item>
     <item>
       <title>viper-config</title>
