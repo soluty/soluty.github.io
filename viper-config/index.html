@@ -1,15 +1,149 @@
-<!doctype html><html lang=zh-cn><head><meta charset=utf-8><meta http-equiv=x-ua-compatible content="IE=edge"><meta name=viewport content="width=device-width,initial-scale=1,shrink-to-fit=no"><title>viper-config - soluty</title><meta name=description content="介绍 使用viper的配置编写和读取小工具，映射一个大的Config对象, 简化viper读取配置的编写
+<!DOCTYPE html>
+<html lang="zh-cn">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <title>viper-config - soluty</title>
+    
+    <meta name="description" content="介绍 使用viper的配置编写和读取小工具，映射一个大的Config对象, 简化viper读取配置的编写
 安装 go install soluty.cc/viper-config
 使用说明 假设在config目录中有一个config.go文件， 其中定义一个类型为Config如下
 type Config struct{ A int B string } 那么在该目录中调用viper-config config -p ${package} 即可生成config_gen_Config.go
 其它地方调用生成的Init方法即可。为了方便，也可以放在go:generate中调用。
-wishlist 目前不能直接映射time.Time结构体 没有封装写方法 "><meta name=author content><meta name=go-import content="soluty.cc/viper-config git https://gitee.com/soluty/viper-config.git "><link href=https://soluty.cc/an-old-hope.min.css rel=stylesheet><link href=https://soluty.cc/style.css rel=stylesheet><link href=https://soluty.cc/custom.css rel=stylesheet><link rel=apple-touch-icon href=https://soluty.cc/apple-touch-icon.png><link rel=icon href=https://soluty.cc/favicon.ico><meta name=generator content="Hugo 0.119.0"><script>function setTheme(){if(window.matchMedia("(prefers-color-scheme: dark)").matches){document.body.classList.add("dark");return}const n=new Date,a=localStorage.getItem("date"),s=String(n.getMonth()+1)+"."+String(n.getDate()),o=n.getTime();let e,t;function i(){if(o>e&&o<t)return;document.body.classList.add("dark")}s!==a?(fetch("https://api.ipgeolocation.io/astronomy?apiKey=5ed37d85103e4defa5df4c5298ed5215").then(e=>e.json()).then(n=>{e=n.sunrise.split(":").map(Number),t=n.sunset.split(":").map(Number)}).catch(()=>{e=[7,0],t=[19,0]}).finally(()=>{e=n.setHours(e[0],e[1],0),t=n.setHours(t[0],t[1],0),i(),localStorage.setItem("sunrise",e),localStorage.setItem("sunset",t)}),localStorage.setItem("date",s)):(e=Number(localStorage.getItem("sunrise")),t=Number(localStorage.getItem("sunset")),i())}</script></head><body class=single><script>setTheme()</script><header class=header><nav class=nav><p class=logo><a href=https://soluty.cc/>soluty</a></p></nav></header><main class=main><article class=post-single><header class=post-header><h1 class=post-title>viper-config</h1><div class=post-meta>May 12, 2019</div></header><div class=post-content><h4 id=介绍>介绍</h4><p>使用viper的配置编写和读取小工具，映射一个大的Config对象, 简化viper读取配置的编写</p><h4 id=安装>安装</h4><p>go install soluty.cc/viper-config</p><h4 id=使用说明>使用说明</h4><p>假设在config目录中有一个config.go文件， 其中定义一个类型为Config如下</p><pre tabindex=0><code>type Config struct{
+wishlist 目前不能直接映射time.Time结构体 没有封装写方法 ">
+    <meta name="author" content="">
+    
+      
+        
+      
+    
+      
+        
+        <meta name="go-import" content="soluty.cc/viper-config git https://gitee.com/soluty/viper-config.git ">
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+
+    
+    <link href="https://soluty.cc/an-old-hope.min.css" rel="stylesheet">
+    <link href="https://soluty.cc/style.css" rel="stylesheet">
+    <link href="https://soluty.cc/custom.css" rel="stylesheet">
+    
+    <link rel="apple-touch-icon" href="https://soluty.cc/apple-touch-icon.png">
+    <link rel="icon" href="https://soluty.cc/favicon.ico">
+    <meta name="generator" content="Hugo 0.119.0">
+    
+    
+    
+    <script>
+      function setTheme() {
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          document.body.classList.add('dark');
+          return;
+        }
+
+        const time = new Date();
+        const prev = localStorage.getItem('date');
+        const date = String(time.getMonth() + 1) + '.' + String(time.getDate());
+
+        const now = time.getTime();
+        let sunrise;
+        let sunset;
+
+        function setBodyClass() {
+          if (now > sunrise && now < sunset) return;
+          document.body.classList.add('dark');
+        }
+
+        if (date !== prev) {
+          fetch('https://api.ipgeolocation.io/astronomy?apiKey=5ed37d85103e4defa5df4c5298ed5215')
+            .then((res) => res.json())
+            .then((data) => {
+              sunrise = data.sunrise.split(':').map(Number);
+              sunset = data.sunset.split(':').map(Number);
+            })
+            .catch(() => {
+              sunrise = [7, 0];
+              sunset = [19, 0];
+            })
+            .finally(() => {
+              sunrise = time.setHours(sunrise[0], sunrise[1], 0);
+              sunset = time.setHours(sunset[0], sunset[1], 0);
+              setBodyClass();
+              localStorage.setItem('sunrise', sunrise);
+              localStorage.setItem('sunset', sunset);
+            });
+          localStorage.setItem('date', date);
+        } else {
+          sunrise = Number(localStorage.getItem('sunrise'));
+          sunset = Number(localStorage.getItem('sunset'));
+          setBodyClass();
+        }
+      }
+    </script>
+  </head>
+  <body class="single">
+    <script>
+      setTheme();
+    </script>
+    <header class="header">
+      <nav class="nav">
+        <p class="logo"><a href="https://soluty.cc/">soluty</a></p>
+      </nav>
+    </header>
+    <main class="main">
+
+
+<article class="post-single">
+  <header class="post-header">
+    <h1 class="post-title">viper-config</h1>
+    <div class="post-meta">May 12, 2019</div>
+  </header>
+  <div class="post-content"><h4 id="介绍">介绍</h4>
+<p>使用viper的配置编写和读取小工具，映射一个大的Config对象, 简化viper读取配置的编写</p>
+<h4 id="安装">安装</h4>
+<p>go install soluty.cc/viper-config</p>
+<h4 id="使用说明">使用说明</h4>
+<p>假设在config目录中有一个config.go文件， 其中定义一个类型为Config如下</p>
+<pre tabindex="0"><code>type Config struct{
     A int
     B string
 }
-</code></pre><p>那么在该目录中调用viper-config config -p ${package} 即可生成config_gen_Config.go</p><p>其它地方调用生成的Init方法即可。为了方便，也可以放在go:generate中调用。</p><h4 id=wishlist>wishlist</h4><ol><li>目前不能直接映射time.Time结构体</li><li>没有封装写方法</li></ol></div></article></main><footer class=footer><span>&copy; 2023 <a href=https://soluty.cc/>soluty</a></span>
-<span>&#183;</span>
-<span>Powered by <a href=https://gohugo.io/ rel=noopener target=_blank>Hugo️️</a>️</span>
-<span>&#183;</span>
-<span>Theme️ <a href=https://github.com/nanxiaobei/hugo-paper rel=noopener target=_blank>Paper</a></span></footer><script src=https://soluty.cc/highlight.min.js></script>
-<script>hljs.initHighlightingOnLoad()</script></body></html>
+</code></pre><p>那么在该目录中调用viper-config config -p ${package} 即可生成config_gen_Config.go</p>
+<p>其它地方调用生成的Init方法即可。为了方便，也可以放在go:generate中调用。</p>
+<h4 id="wishlist">wishlist</h4>
+<ol>
+<li>目前不能直接映射time.Time结构体</li>
+<li>没有封装写方法</li>
+</ol>
+</div>
+  
+</article></main>
+<footer class="footer">
+  <span>&copy; 2023 <a href="https://soluty.cc/">soluty</a></span>
+  <span>&middot;</span>
+  <span>Powered by <a href="https://gohugo.io/" rel="noopener" target="_blank">Hugo️️</a>️</span>
+  <span>&middot;</span>
+  <span>Theme️ <a href="https://github.com/nanxiaobei/hugo-paper" rel="noopener" target="_blank">Paper</a></span>
+</footer>
+<script src="https://soluty.cc/highlight.min.js"></script>
+<script>
+  hljs.initHighlightingOnLoad();
+</script>
+</body>
+</html>
+
