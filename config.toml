@@ -1,6 +1,154 @@
-baseURL = "https://soluty.cc/"
-languageCode = "zh-cn"
-title = "soluty"
-theme = "paper"
+baseURL       = "http://soluty.cc/"
+languageCode  = "zh-CN"
+title         = "Soluty | Find Your Solution"
+theme         = "roxo-hugo"
+summarylength = 50
+hasCJKLanguage = true
+# relativeURLs = true
+# canonifyURLs = true
+
+# Site Menus
+[menu]
+  # Navbar Menus
+  [[menu.nav]]
+    name    = "主页"
+    url     = ""
+    weight  = 1
+  [[menu.nav]]
+    name    = "关于"
+    url     = "about"
+    weight  = 2
+  [[menu.nav]]
+    name    = "项目"
+    url     = "portfolio"
+    weight  = 3
+  [[menu.nav]]
+    name    = "博客"
+    url     = "blog"
+    weight  = 4
+  [[menu.nav]]
+    name    = "联系我"
+    url     = "contact"
+    weight  = 5
+
+# Site Params
+[params]
+  logo = "images/image.png"
+  logo_footer = "images/image.png"
+  favicon_icon = "images/favicon.ico"
+  favicon_shortcut_icon = "images/favicon.png"
+  custom_stylesheets = []   # [ "scss/my_1.scss", "scss/my_2.scss" ]
+  # dateFormat = "YYYY-MM-DD"
+  dateFormat = "26 FEB 1994"
+  # Meta data
+  description = "Soluty's Home | Make Solution for your idea!"
+  author = "Soluty"
+  # Google Analitycs
+  googleAnalitycsID = "todo"
+  # We're using formspree.io for form handling, paste your formspree url below
+  fabform  = "https://fabform.io/f/zXCISff"
+
+  # Contact Form
+  [params.contactForm]
+    placeholder_first_name        = "姓"
+    placeholder_last_name         = "名"
+    placeholder_email             = "邮箱"
+    placeholder_project_type      = "项目类型"
+    placeholder_about_the_project = "项目想法简介"
+    send_message                  = "联系我"
+
+    [[params.contactForm.projectType]]
+      value = "web"
+      title  = "网站"
+    [[params.contactForm.projectType]]
+      value = "app"
+      title  = "移动app"
+    [[params.contactForm.projectType]]
+      value = "xcx"
+      title  = "小程序"
+    [[params.contactForm.projectType]]
+      value = "plugin"
+      title  = "浏览器插件"
+    [[params.contactForm.projectType]]
+      value = "game"
+      title  = "游戏"
+    [[params.contactForm.projectType]]
+      value = "other"
+      title  = "其它"
+
+  # Navbar Action Button
+  [params.navAction]
+    status  = true
+    name    = "Get in touch"
+    url     = "contact"
 
 
+  # Banner Section
+  [params.banner]
+    enable                = true
+    background_image      = "images/backgrounds/hero-background.jpg"
+    heading               = "We’re a Solution Studio That Realize Great Ideas"
+    tagline               = ""
+    primary_button        = "创意展示"
+    primary_button_url    = "portfolio"
+    secondary_button      = "联系我们"
+    secondary_button_url  = "contact"
+
+  [params.blog]
+    read_more             = "阅读全文"
+
+  [params.portfolio]
+    enable    = false
+    title     = "OUR RECENT WORKS"
+    subtitle  = "Crafting experiences and seeking to make the complex clear & beautiful."
+    view_project = "查看项目"
+    more_works = "MORE WORKS"
+    scroll_down = ""
+
+  [params.call_to_action]
+    enable              = false
+    background_image    = "images/backgrounds/cta-background.jpg"
+    title               = "LET’S WORK TOGETHER"
+    primary_button      = "Submit Query"
+    primary_button_url  = "contact"
+    secondary_button    = "Not Convinced"
+    secondary_button_url = "portfolio"
+
+  [params.footer]
+    params.footer.qr_print = false
+    # Footer Contact Info
+    [params.footer.contactInfo]
+      title   = "联系方式"
+      address = ""
+      phone   = "13366151144"
+      email   = "soluty.lv@qq.com"
+      # Footer Sitemap
+      [params.footer.sitemap]
+        title   = "导航"
+        [[params.footer.sitemap.link]]
+          name = "关于"
+          url  = "about"
+        [[params.footer.sitemap.link]]
+          name = "项目"
+          url  = "portfolio"
+        [[params.footer.sitemap.link]]
+          name = "博客"
+          url  = "blog"
+        [[params.footer.sitemap.link]]
+          name = "联系我"
+          url  = "contact"
+      # Footer Social Media
+      [params.footer.social]
+        title   = "社交媒体"
+        [[params.footer.social.link]]
+          name = "微信"
+          url  = "#"
+        [[params.footer.social.link]]
+          name = "知乎"
+          url  = "#"
+      # Footer Service
+      [params.footer.service]
+        title       = "我能做:"
+        description = "竭尽所能为您的伟大创意提供完美solution"
+      [params.footer.back_to_top]
+        description = "返回"

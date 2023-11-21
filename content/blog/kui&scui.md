@@ -1,7 +1,10 @@
 ---
 title: "kui&scui"
 date: 2023-11-06T14:50:00+08:00
-draft: false
+image: images/blog/blog-post-woman.jpg
+feature_image: images/blog/blank.jpg
+draft: flase
+author: Soluty
 tag: "kui,vim"
 ---
 

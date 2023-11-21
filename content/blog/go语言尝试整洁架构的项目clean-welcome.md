@@ -1,7 +1,11 @@
 ---
 title: "Go语言尝试整洁架构的项目clean Welcome"
 date: 2020-10-09T17:08:27+08:00
-draft: true
+image: images/blog/blog-post-woman.jpg
+feature_image: images/blog/blank.jpg
+draft: flase
+author: Soluty
+tag: "golang"
 ---
 
 前段时间看了Bob大叔于2012年发布的博客[The Clean Architecture](https://blog.cleancoder.com/uncle-bob/2012/08/13/the-clean-architecture.html)，并且写了一篇[翻译](https://soluty.cc/%E6%95%B4%E6%B4%81%E6%9E%B6%E6%9E%84/)，这篇博客中介绍了一种架构的思路叫做整洁架构，感觉很有些用处，但是又感觉有些不是太能得其精髓，所以在go语言中尝试了一下整洁架构。

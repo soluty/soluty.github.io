@@ -2,6 +2,11 @@
 title: "viper-config"
 description: "gomodule"
 date: 2019-05-12T12:14:34+06:00
+image: images/blog/blog-post-woman.jpg
+feature_image: images/blog/blank.jpg
+draft: flase
+author: Soluty
+tag: "golang"
 ---
 
 #### 介绍

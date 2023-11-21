@@ -2,7 +2,10 @@
 title: "如何搭建自己域名的go模块"
 date: 2023-10-26T19:46:18+08:00
 draft: false
-tag: "golang"
+image: images/blog/blog-post-woman.jpg
+feature_image: images/blog/blank.jpg
+author: Soluty
+tag: "arch,golang"
 ---
 
 ### 为什么不直接用github而需要搭建自己域名的go模块
