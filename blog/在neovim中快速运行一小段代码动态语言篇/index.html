@@ -1,156 +1,384 @@
-<!doctype html><html lang=zh-CN><head><meta charset=utf-8><title>在neovim中快速运行一小段代码(动态语言篇)</title><meta name=viewport content="width=device-width,initial-scale=1"><meta name=viewport content="width=device-width,initial-scale=1,maximum-scale=1"><meta name=author content="Soluty"><meta name=generator content="Hugo 0.119.0"><link rel=stylesheet href=https://soluty.cc/css/bootstrap.min.css><link rel=stylesheet href=https://soluty.cc/font-awesome/css/font-awesome.min.css><link href=https://soluty.cc/scss/style.min.css rel=stylesheet><link rel="shortcut icon" href=https://soluty.cc/images/favicon.png type=image/x-icon><link rel=icon href=https://soluty.cc/images/favicon.ico type=image/x-icon></head><body><nav class="navbar navbar-expand-lg site-navigation"><div class=container><a class=navbar-brand href=https://soluty.cc/><img src=https://soluty.cc/images/image.png alt=logo></a>
-<button class="navbar-toggler collapsed" type=button data-toggle=collapse data-target=#sitenavbar>
-<span class=icon-bar></span>
-<span class=icon-bar></span>
-<span class=icon-bar></span></button><div class="collapse navbar-collapse" id=sitenavbar><ul class="navbar-nav ml-auto main-nav"><li class=nav-item><a class=nav-link href=https://soluty.cc/>主页</a></li><li class=nav-item><a class=nav-link href=https://soluty.cc/about>关于</a></li><li class=nav-item><a class=nav-link href=https://soluty.cc/portfolio>项目</a></li><li class=nav-item><a class=nav-link href=https://soluty.cc/blog>博客</a></li><li class=nav-item><a class="nav-link btn btn-sm btn-primary btn-sm-rounded" href=https://soluty.cc/contact><span class=btn-area><span data-text=联系我>联系我</span></span></a></li></ul></div></div></nav><main><section class="site-blog details"><div class=container><div class="row justify-content-center"><div class=col-lg-8><article class=site-blog-details><p><span>November 6, 2023</span> by <span>Soluty</span></p><h2 class=blog-title>在neovim中快速运行一小段代码(动态语言篇)</h2><img class=feature-image src=https://soluty.cc/images/blog/blog-post-woman.jpg alt=blog-feature-image><p>在编程的过程中,如何检验一断逻辑或者一个函数是否按照预期的来运行,一般情况下都是通过编写单元测试来实现.这在一个稍微长期一点的项目中
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="utf-8" />
+  <title>在neovim中快速运行一小段代码(动态语言篇)</title>
+
+  <!-- mobile responsive meta -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  
+  <meta name="author" content="Soluty">
+  
+  <meta name="generator" content="Hugo 0.120.4">
+
+  <!-- Bootstrap -->
+  
+  <link rel="stylesheet" href="https://soluty.cc/css/bootstrap.min.css" />
+  <!-- font-awesome -->
+  <link rel="stylesheet" href="https://soluty.cc/font-awesome/css/font-awesome.min.css" />
+  <!-- Main Stylesheets -->
+  
+  <link href="https://soluty.cc/scss/style.min.css" rel="stylesheet" />
+
+  
+
+  
+  <link rel="shortcut icon" href="https://soluty.cc/images/favicon.png" type="image/x-icon" />
+  <link rel="icon" href="https://soluty.cc/images/favicon.ico" type="image/x-icon" />
+</head>
+<body><nav class="navbar navbar-expand-lg site-navigation">
+  <div class="container">
+    <a class="navbar-brand" href="https://soluty.cc/">
+      <img src="https://soluty.cc/images/image.png" alt="logo" />
+    </a>
+    <button
+      class="navbar-toggler collapsed"
+      type="button"
+      data-toggle="collapse"
+      data-target="#sitenavbar"
+    >
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="sitenavbar">
+      <ul class="navbar-nav ml-auto main-nav">
+         
+         
+         
+          
+          <li class="nav-item">
+            <a class="nav-link" href="https://soluty.cc/"
+              >主页</a
+            >
+          </li>
+           
+         
+          
+          <li class="nav-item">
+            <a class="nav-link" href="https://soluty.cc/about"
+              >关于</a
+            >
+          </li>
+           
+         
+          
+          <li class="nav-item">
+            <a class="nav-link" href="https://soluty.cc/portfolio"
+              >项目</a
+            >
+          </li>
+           
+         
+          
+          <li class="nav-item">
+            <a class="nav-link" href="https://soluty.cc/blog"
+              >博客</a
+            >
+          </li>
+           
+         
+          
+          <li class="nav-item">
+            <a
+              class="nav-link btn btn-sm btn-primary btn-sm-rounded"
+              href="https://soluty.cc/contact"
+            >
+              <span class="btn-area">
+                <span data-text="联系我">
+                  联系我
+                </span>
+              </span>
+            </a>
+          </li>
+           
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+<main>
+
+<section class="site-blog details">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <article class="site-blog-details">
+          <p><span>November 6, 2023</span> by <span>Soluty</span></p>
+          <h2 class="blog-title">在neovim中快速运行一小段代码(动态语言篇)</h2>
+          <img class="feature-image" src="https://soluty.cc/images/blog/blog-post-woman.jpg" alt="blog-feature-image">
+          <p>在编程的过程中,如何检验一断逻辑或者一个函数是否按照预期的来运行,一般情况下都是通过编写单元测试来实现.这在一个稍微长期一点的项目中
 是有较大收益的,但是有些情况下并不是很适用.例如,短期的外包项目,又或者是在一些游戏项目中,demo期间和上线之前,策划的需求变化会非常的
-频繁,这个时候单元测试就显得有些鸡肋.这个时候如何运行一个大工程中的一小段逻辑,目前业界并无通用的方法.</p><h2 id=编辑器插件>编辑器插件</h2><p>如果对于只用到了标准库的动态语言而言,这个还算是很简单的一件事情,核心的思想就是把光标选择到的代码切割出来,把它写到一个临时文件
+频繁,这个时候单元测试就显得有些鸡肋.这个时候如何运行一个大工程中的一小段逻辑,目前业界并无通用的方法.</p>
+<h2 id="编辑器插件">编辑器插件</h2>
+<p>如果对于只用到了标准库的动态语言而言,这个还算是很简单的一件事情,核心的思想就是把光标选择到的代码切割出来,把它写到一个临时文件
 中,然后运行这个临时文件,假如是bash脚本,则运行bash temp.sh, 如果是python脚本, 则运行python temp.py.通过这个原理,vscode和
-neovim中都有插件来完成这个事情.</p><p>vscode中出名的插件是微软工程师编写的<a href=https://github.com/formulahendry/vscode-code-runner>code_runner</a>,neovim中我觉得不错的插件是<a href=https://github.com/michaelb/sniprun>sniprun</a></p><h2 id=当前这些插件的缺陷>当前这些插件的缺陷</h2><p>这些插件都有一些缺陷,他们对于运行某一个文件支持的还不错,而对于运行一小段代码支持的不太行,他们都没有提供好点的办法支持函数的
+neovim中都有插件来完成这个事情.</p>
+<p>vscode中出名的插件是微软工程师编写的<a href="https://github.com/formulahendry/vscode-code-runner">code_runner</a>,neovim中我觉得不错的插件是<a href="https://github.com/michaelb/sniprun">sniprun</a></p>
+<h2 id="当前这些插件的缺陷">当前这些插件的缺陷</h2>
+<p>这些插件都有一些缺陷,他们对于运行某一个文件支持的还不错,而对于运行一小段代码支持的不太行,他们都没有提供好点的办法支持函数的
 调用,
-比如在python脚本中a函数调用了b函数,即使这两个函数在一个文件,如果我只用光标框起a函数,这两个插件默认这个b函数是不会被选择进文件的,运行起来毫无疑问会报错.</p><p>对写法非常灵活的动态语言而言,那些插件似乎也只能做成这样,但是这样的话它的适用情况很狭隘,基本只能用于学习编程语言,是没有办法
-在实际的工程中使用来满足运行一段逻辑的需求的.</p><h2 id=少即是多限制代码的写法来解决上面提到的问题>少即是多,限制代码的写法来解决上面提到的问题</h2><p>我一般写bash脚本的时候都是一个文件就搞定了,并且文件中会用main作为主函数,并且在最后一行调用main函数.这样可以保证所有的逻辑都
+比如在python脚本中a函数调用了b函数,即使这两个函数在一个文件,如果我只用光标框起a函数,这两个插件默认这个b函数是不会被选择进文件的,运行起来毫无疑问会报错.</p>
+<p>对写法非常灵活的动态语言而言,那些插件似乎也只能做成这样,但是这样的话它的适用情况很狭隘,基本只能用于学习编程语言,是没有办法
+在实际的工程中使用来满足运行一段逻辑的需求的.</p>
+<h2 id="少即是多限制代码的写法来解决上面提到的问题">少即是多,限制代码的写法来解决上面提到的问题</h2>
+<p>我一般写bash脚本的时候都是一个文件就搞定了,并且文件中会用main作为主函数,并且在最后一行调用main函数.这样可以保证所有的逻辑都
 写在某一个函数中.我发现这种写法天生就能搞定上面的a函数调用b函数的问题, 只需要把文件中最后一行main函数调用的地方给去掉,
 然后把光标所选择的代码放置到文件的最后, 即可. 或者将这些代码放在一个特定名字的函数,如___main___中,然后调用这个
-___main___函数即可完美解决bash中运行光标所选代码的问题,光标运行的代码和在实际的文件中运行的代码的作用会完全一样.</p><p>这个思路无论对vscode或者是neovim或者其他的编辑器都是适用的.因为我现在写代码主要使用的编辑器是neovim,vscode主要用在网页上阅读github
-上的开源代码而不用将其clone下来.所以我后面的具体实现上都以neovim的lua代码作为描述,vscode应该也能通过同样思路来实现.</p><p>还有一个情况,通常而言所有的语言虽然不是必须要格式化以后才能运行,但是对于运行一小段代码而言,一个通用的前提条件是整个工程的代码
-都已经格式化过了, 这个在所有的编辑器中都很容易配置成自动完成,这也属于限制代码写法的一部分.</p><p>所以,对于解释性的脚本语言而言,如果我们限制所有代码必须写函数中并且会通过main函数作为唯一的入口来调用的话,那么
+___main___函数即可完美解决bash中运行光标所选代码的问题,光标运行的代码和在实际的文件中运行的代码的作用会完全一样.</p>
+<p>这个思路无论对vscode或者是neovim或者其他的编辑器都是适用的.因为我现在写代码主要使用的编辑器是neovim,vscode主要用在网页上阅读github
+上的开源代码而不用将其clone下来.所以我后面的具体实现上都以neovim的lua代码作为描述,vscode应该也能通过同样思路来实现.</p>
+<p>还有一个情况,通常而言所有的语言虽然不是必须要格式化以后才能运行,但是对于运行一小段代码而言,一个通用的前提条件是整个工程的代码
+都已经格式化过了, 这个在所有的编辑器中都很容易配置成自动完成,这也属于限制代码写法的一部分.</p>
+<p>所以,对于解释性的脚本语言而言,如果我们限制所有代码必须写函数中并且会通过main函数作为唯一的入口来调用的话,那么
 把光标所在文件的所有内容除去main函数调用的地方全部克隆过去并将光标所选择的代码拷贝到___main___函数中,并最后调用___main___
-函数是一个通用的做法,他能保证对于所有单文件脚本,不管它有没有调用外部库,都能够做到完美的运行大工程中的一小段代码.</p><h3 id=bash>bash</h3><p>下面的代码是对bash脚本的实现,
-通过<code>line:match("^main$")</code>来过滤掉main这一行调用,并且把选择的代码包裹进___main___函数中,然后调用.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-lua data-lang=lua><span style=display:flex><span><span style=color:#66d9ef>local</span> <span style=color:#66d9ef>function</span> <span style=color:#a6e22e>createBashCodeString</span>()
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>local</span> lines <span style=color:#f92672>=</span> vim.api.nvim_buf_get_lines(<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>, <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>, <span style=color:#66d9ef>false</span>)
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>local</span> filtered_content <span style=color:#f92672>=</span> {}
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>for</span> _, line <span style=color:#66d9ef>in</span> ipairs(lines) <span style=color:#66d9ef>do</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> line:match(<span style=color:#e6db74>&#34;^main$&#34;</span>) <span style=color:#66d9ef>then</span>
-</span></span><span style=display:flex><span>      <span style=color:#66d9ef>goto</span> continue
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>end</span>
-</span></span><span style=display:flex><span>    table.insert(filtered_content, line)
-</span></span><span style=display:flex><span>    ::continue::
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>end</span>
-</span></span><span style=display:flex><span>  table.insert(filtered_content, <span style=color:#e6db74>&#34;___main___(){&#34;</span>)
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>local</span> selectLines <span style=color:#f92672>=</span> util.get_visual_selection_content()
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>for</span> i, line <span style=color:#66d9ef>in</span> ipairs(selectLines) <span style=color:#66d9ef>do</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> i <span style=color:#f92672>==</span> <span style=color:#ae81ff>1</span> <span style=color:#66d9ef>then</span>
-</span></span><span style=display:flex><span>      <span style=color:#66d9ef>if</span> line:sub(<span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>) <span style=color:#f92672>==</span> <span style=color:#e6db74>&#34;{&#34;</span> <span style=color:#66d9ef>then</span>
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>goto</span> continue
-</span></span><span style=display:flex><span>      <span style=color:#66d9ef>end</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>end</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> i <span style=color:#f92672>==</span> <span style=color:#f92672>#</span>selectLines <span style=color:#66d9ef>then</span>
-</span></span><span style=display:flex><span>      <span style=color:#66d9ef>if</span> line:sub(<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>1</span>) <span style=color:#f92672>==</span> <span style=color:#e6db74>&#34;}&#34;</span> <span style=color:#66d9ef>then</span>
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>goto</span> continue
-</span></span><span style=display:flex><span>      <span style=color:#66d9ef>end</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>end</span>
-</span></span><span style=display:flex><span>    table.insert(filtered_content, line)
-</span></span><span style=display:flex><span>    ::continue::
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>end</span>
-</span></span><span style=display:flex><span>  table.insert(filtered_content, <span style=color:#e6db74>&#34;}&#34;</span>)
-</span></span><span style=display:flex><span>  table.insert(filtered_content, <span style=color:#e6db74>&#34;___main___&#34;</span>)
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>local</span> codestring <span style=color:#f92672>=</span> table.concat(filtered_content, <span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>)
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>return</span> codestring
-</span></span><span style=display:flex><span><span style=color:#66d9ef>end</span>
-</span></span></code></pre></div><h3 id=python>python</h3><p>python也类似,与上面不同的有两点,一是main函数的调用检测,python是带括号来调用,
-二是需要限制python写代码需要用tab作为缩进.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-lua data-lang=lua><span style=display:flex><span><span style=color:#66d9ef>local</span> <span style=color:#66d9ef>function</span> <span style=color:#a6e22e>createPythonCodeString</span>()
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>local</span> lines <span style=color:#f92672>=</span> vim.api.nvim_buf_get_lines(<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>, <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>, <span style=color:#66d9ef>false</span>)
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>local</span> filtered_content <span style=color:#f92672>=</span> {}
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>for</span> _, line <span style=color:#66d9ef>in</span> ipairs(lines) <span style=color:#66d9ef>do</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> string.len(line) <span style=color:#f92672>&gt;=</span> <span style=color:#ae81ff>5</span> <span style=color:#f92672>and</span> string.sub(line, <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>5</span>) <span style=color:#f92672>==</span> <span style=color:#e6db74>&#34;main(&#34;</span> <span style=color:#66d9ef>then</span>
-</span></span><span style=display:flex><span>      <span style=color:#66d9ef>goto</span> continue
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>end</span>
-</span></span><span style=display:flex><span>    table.insert(filtered_content, line)
-</span></span><span style=display:flex><span>    ::continue::
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>end</span>
-</span></span><span style=display:flex><span>  table.insert(filtered_content, <span style=color:#e6db74>&#34;def ___main___():&#34;</span>)
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>local</span> selectLines <span style=color:#f92672>=</span> util.get_visual_selection_content()
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>local</span> fix <span style=color:#f92672>=</span> <span style=color:#ae81ff>1</span>
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>for</span> i, line <span style=color:#66d9ef>in</span> ipairs(selectLines) <span style=color:#66d9ef>do</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> i <span style=color:#f92672>==</span> <span style=color:#ae81ff>1</span> <span style=color:#66d9ef>then</span>
-</span></span><span style=display:flex><span>      <span style=color:#66d9ef>local</span> count <span style=color:#f92672>=</span> tabCount(line)
-</span></span><span style=display:flex><span>      fix <span style=color:#f92672>=</span> fix <span style=color:#f92672>-</span> count
-</span></span><span style=display:flex><span>      <span style=color:#66d9ef>if</span> string.len(line) <span style=color:#f92672>&gt;=</span> count <span style=color:#f92672>+</span> <span style=color:#ae81ff>4</span> <span style=color:#f92672>and</span> string.sub(line, count <span style=color:#f92672>+</span> <span style=color:#ae81ff>1</span>, count <span style=color:#f92672>+</span> <span style=color:#ae81ff>4</span>) <span style=color:#f92672>==</span> <span style=color:#e6db74>&#34;def &#34;</span> <span style=color:#66d9ef>then</span>
-</span></span><span style=display:flex><span>        fix <span style=color:#f92672>=</span> fix <span style=color:#f92672>-</span> <span style=color:#ae81ff>1</span>
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>goto</span> continue
-</span></span><span style=display:flex><span>      <span style=color:#66d9ef>end</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>end</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> fix <span style=color:#f92672>&gt;</span> <span style=color:#ae81ff>0</span> <span style=color:#66d9ef>then</span>
-</span></span><span style=display:flex><span>      table.insert(filtered_content, <span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\t</span><span style=color:#e6db74>&#34;</span> <span style=color:#f92672>..</span> line)
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>elseif</span> fix <span style=color:#f92672>&lt;</span> <span style=color:#ae81ff>0</span> <span style=color:#66d9ef>then</span>
-</span></span><span style=display:flex><span>      table.insert(filtered_content, string.sub(line, <span style=color:#f92672>-</span>fix))
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>else</span>
-</span></span><span style=display:flex><span>      table.insert(filtered_content, line)
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>end</span>
-</span></span><span style=display:flex><span>    ::continue::
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>end</span>
-</span></span><span style=display:flex><span>  table.insert(filtered_content, <span style=color:#e6db74>&#34;___main___()&#34;</span>)
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>local</span> codestring <span style=color:#f92672>=</span> table.concat(filtered_content, <span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>)
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>return</span> codestring
-</span></span><span style=display:flex><span><span style=color:#66d9ef>end</span>
-</span></span></code></pre></div><h3 id=javascript和typescript>javascript和typescript</h3><p>js和python类似的,都是通过前5个字符为main(来判断main函数的调用.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-lua data-lang=lua><span style=display:flex><span><span style=color:#66d9ef>local</span> <span style=color:#66d9ef>function</span> <span style=color:#a6e22e>createJsCodeString</span>()
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>local</span> lines <span style=color:#f92672>=</span> vim.api.nvim_buf_get_lines(<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>, <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>, <span style=color:#66d9ef>false</span>)
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>local</span> filtered_content <span style=color:#f92672>=</span> {}
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>for</span> _, line <span style=color:#66d9ef>in</span> ipairs(lines) <span style=color:#66d9ef>do</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> string.len(line) <span style=color:#f92672>&gt;=</span> <span style=color:#ae81ff>5</span> <span style=color:#f92672>and</span> string.sub(line, <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>5</span>) <span style=color:#f92672>==</span> <span style=color:#e6db74>&#34;main(&#34;</span> <span style=color:#66d9ef>then</span>
-</span></span><span style=display:flex><span>      <span style=color:#66d9ef>goto</span> continue
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>end</span>
-</span></span><span style=display:flex><span>    table.insert(filtered_content, line)
-</span></span><span style=display:flex><span>    ::continue::
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>end</span>
-</span></span><span style=display:flex><span>  table.insert(filtered_content, <span style=color:#e6db74>&#34;function ___main___(){&#34;</span>)
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>local</span> selectLines <span style=color:#f92672>=</span> util.get_visual_selection_content()
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>for</span> i, line <span style=color:#66d9ef>in</span> ipairs(selectLines) <span style=color:#66d9ef>do</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> i <span style=color:#f92672>==</span> <span style=color:#ae81ff>1</span> <span style=color:#66d9ef>then</span>
-</span></span><span style=display:flex><span>      <span style=color:#66d9ef>if</span> string.find(line, <span style=color:#e6db74>&#34;function &#34;</span>) <span style=color:#66d9ef>then</span>
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>goto</span> continue
-</span></span><span style=display:flex><span>      <span style=color:#66d9ef>end</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>end</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> i <span style=color:#f92672>==</span> <span style=color:#f92672>#</span>selectLines <span style=color:#66d9ef>then</span>
-</span></span><span style=display:flex><span>      <span style=color:#66d9ef>if</span> line:sub(<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>1</span>) <span style=color:#f92672>==</span> <span style=color:#e6db74>&#34;}&#34;</span> <span style=color:#66d9ef>then</span>
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>goto</span> continue
-</span></span><span style=display:flex><span>      <span style=color:#66d9ef>end</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>end</span>
-</span></span><span style=display:flex><span>    table.insert(filtered_content, line)
-</span></span><span style=display:flex><span>    ::continue::
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>end</span>
-</span></span><span style=display:flex><span>  table.insert(filtered_content, <span style=color:#e6db74>&#34;}&#34;</span>)
-</span></span><span style=display:flex><span>  table.insert(filtered_content, <span style=color:#e6db74>&#34;___main___()&#34;</span>)
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>local</span> codestring <span style=color:#f92672>=</span> table.concat(filtered_content, <span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>)
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>return</span> codestring
-</span></span><span style=display:flex><span><span style=color:#66d9ef>end</span>
-</span></span></code></pre></div><h3 id=lua>lua</h3><p>lua有一点点不一样, 我目前写lua主要在neovim中写, 不用它作为通用的编程语言, 除了去掉main函数的调用以外,
-还需要去掉在lua的模块中的return语句. 否则添加到后面的代码都被return掉了.</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-lua data-lang=lua><span style=display:flex><span><span style=color:#66d9ef>local</span> <span style=color:#66d9ef>function</span> <span style=color:#a6e22e>createLuaCodeString</span>()
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>local</span> filtered_content <span style=color:#f92672>=</span> {}
-</span></span><span style=display:flex><span>  table.insert(filtered_content, <span style=color:#e6db74>&#34;-- vim&#34;</span>)
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>local</span> lines <span style=color:#f92672>=</span> vim.api.nvim_buf_get_lines(<span style=color:#ae81ff>0</span>, <span style=color:#ae81ff>0</span>, <span style=color:#f92672>-</span><span style=color:#ae81ff>1</span>, <span style=color:#66d9ef>false</span>)
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>for</span> _, line <span style=color:#66d9ef>in</span> ipairs(lines) <span style=color:#66d9ef>do</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> string.len(line) <span style=color:#f92672>&gt;=</span> <span style=color:#ae81ff>5</span> <span style=color:#f92672>and</span> string.sub(line, <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>5</span>) <span style=color:#f92672>==</span> <span style=color:#e6db74>&#34;main(&#34;</span> <span style=color:#66d9ef>then</span>
-</span></span><span style=display:flex><span>      <span style=color:#66d9ef>goto</span> continue
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>end</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> string.len(line) <span style=color:#f92672>&gt;=</span> <span style=color:#ae81ff>6</span> <span style=color:#f92672>and</span> string.sub(line, <span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>6</span>) <span style=color:#f92672>==</span> <span style=color:#e6db74>&#34;return&#34;</span> <span style=color:#66d9ef>then</span>
-</span></span><span style=display:flex><span>      <span style=color:#66d9ef>break</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>end</span>
-</span></span><span style=display:flex><span>    table.insert(filtered_content, line)
-</span></span><span style=display:flex><span>    ::continue::
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>end</span>
-</span></span><span style=display:flex><span>  table.insert(filtered_content, <span style=color:#e6db74>&#34;local function ___main___()&#34;</span>)
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>local</span> selectLines <span style=color:#f92672>=</span> util.get_visual_selection_content()
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>for</span> i, line <span style=color:#66d9ef>in</span> ipairs(selectLines) <span style=color:#66d9ef>do</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> i <span style=color:#f92672>==</span> <span style=color:#ae81ff>1</span> <span style=color:#66d9ef>then</span>
-</span></span><span style=display:flex><span>      <span style=color:#66d9ef>if</span> string.find(line, <span style=color:#e6db74>&#34;function &#34;</span>) <span style=color:#66d9ef>then</span>
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>goto</span> continue
-</span></span><span style=display:flex><span>      <span style=color:#66d9ef>end</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>end</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>if</span> i <span style=color:#f92672>==</span> <span style=color:#f92672>#</span>selectLines <span style=color:#66d9ef>then</span>
-</span></span><span style=display:flex><span>      <span style=color:#66d9ef>if</span> line:sub(<span style=color:#ae81ff>1</span>, <span style=color:#ae81ff>3</span>) <span style=color:#f92672>==</span> <span style=color:#e6db74>&#34;end&#34;</span> <span style=color:#66d9ef>then</span>
-</span></span><span style=display:flex><span>        <span style=color:#66d9ef>goto</span> continue
-</span></span><span style=display:flex><span>      <span style=color:#66d9ef>end</span>
-</span></span><span style=display:flex><span>    <span style=color:#66d9ef>end</span>
-</span></span><span style=display:flex><span>    table.insert(filtered_content, line)
-</span></span><span style=display:flex><span>    ::continue::
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>end</span>
-</span></span><span style=display:flex><span>  table.insert(filtered_content, <span style=color:#e6db74>&#34;end&#34;</span>)
-</span></span><span style=display:flex><span>  table.insert(filtered_content, <span style=color:#e6db74>&#34;___main___()&#34;</span>)
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>local</span> codestring <span style=color:#f92672>=</span> table.concat(filtered_content, <span style=color:#e6db74>&#34;</span><span style=color:#ae81ff>\n</span><span style=color:#e6db74>&#34;</span>)
-</span></span><span style=display:flex><span>  <span style=color:#66d9ef>return</span> codestring
-</span></span><span style=display:flex><span><span style=color:#66d9ef>end</span>
-</span></span></code></pre></div><h2 id=其他>其他</h2><p>上面的几个语言是我最经常用的动态语言,因为动态语言写法千奇百怪, 所以可能有一些情况没法覆盖到, 一个常见的就是运行闭包内的函数.
-很还有一些我不常用的lisp系语言如haskell.</p></article></div></div></div></section></main><footer class=site-footer><div class=container><div class=row><div class=col-12><div class=site-footer-logo><a href=https://soluty.cc/><img src=https://soluty.cc/images/image.png alt=logo-footer></a></div></div><div class="col-lg-3 col-md-6"><div class=site-footer-widget><h5 class=site-footer-widget-title>联系方式</h5><p class=site-footer-widget-description><a href=tel:13366151144>13366151144</a><br><a href=mailto:soluty.lv@qq.com>soluty.lv@qq.com</a></p></div></div><div class="col-lg-2 col-md-6"><div class=site-footer-widget><h5 class=site-footer-widget-title>导航</h5><ul class=site-footer-widget-links><li><a href=https://soluty.cc/about>关于</a></li><li><a href=https://soluty.cc/portfolio>项目</a></li><li><a href=https://soluty.cc/blog>博客</a></li><li><a href=https://soluty.cc/contact>联系我</a></li></ul></div></div><div class="col-lg-2 col-md-6"><div class=site-footer-widget><h5 class=site-footer-widget-title>社交媒体</h5><ul class=site-footer-widget-links><li><a href=#>微信</a></li><li><a href=#>知乎</a></li></ul></div></div><div class="col-lg-3 col-md-6"><div class=site-footer-widget><h5 class=site-footer-widget-title>我能做:</h5><p class=site-footer-widget-description>竭尽所能为您的伟大创意提供完美solution</p></div></div><div class="col-lg-2 col-12"><a href=#top class=site-footer-widget-top><img src=https://soluty.cc/images/to-top.svg alt=back-to-top><p>返回</p></a></div><div class=col-12><div class=site-footer-copyright><p>© Copyright 2023 - All Rights Reserved by <a href=https://staticmania.com/ target=_blank>StaticMania</a></p></div></div></div></div></footer><script src=https://soluty.cc/js/vendor.min.js></script>
-<script src=https://soluty.cc/js/script.min.js></script></body></html>
+函数是一个通用的做法,他能保证对于所有单文件脚本,不管它有没有调用外部库,都能够做到完美的运行大工程中的一小段代码.</p>
+<h3 id="bash">bash</h3>
+<p>下面的代码是对bash脚本的实现,
+通过<code>line:match(&quot;^main$&quot;)</code>来过滤掉main这一行调用,并且把选择的代码包裹进___main___函数中,然后调用.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-lua" data-lang="lua"><span style="display:flex;"><span><span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">createBashCodeString</span>()
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">local</span> lines <span style="color:#f92672">=</span> vim.api.nvim_buf_get_lines(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#66d9ef">false</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">local</span> filtered_content <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> _, line <span style="color:#66d9ef">in</span> ipairs(lines) <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> line:match(<span style="color:#e6db74">&#34;^main$&#34;</span>) <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">goto</span> continue
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>    table.insert(filtered_content, line)
+</span></span><span style="display:flex;"><span>    ::continue::
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  table.insert(filtered_content, <span style="color:#e6db74">&#34;___main___(){&#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">local</span> selectLines <span style="color:#f92672">=</span> util.get_visual_selection_content()
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> i, line <span style="color:#66d9ef">in</span> ipairs(selectLines) <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> i <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> line:sub(<span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;{&#34;</span> <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">goto</span> continue
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> i <span style="color:#f92672">==</span> <span style="color:#f92672">#</span>selectLines <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> line:sub(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;}&#34;</span> <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">goto</span> continue
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>    table.insert(filtered_content, line)
+</span></span><span style="display:flex;"><span>    ::continue::
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  table.insert(filtered_content, <span style="color:#e6db74">&#34;}&#34;</span>)
+</span></span><span style="display:flex;"><span>  table.insert(filtered_content, <span style="color:#e6db74">&#34;___main___&#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">local</span> codestring <span style="color:#f92672">=</span> table.concat(filtered_content, <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> codestring
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><h3 id="python">python</h3>
+<p>python也类似,与上面不同的有两点,一是main函数的调用检测,python是带括号来调用,
+二是需要限制python写代码需要用tab作为缩进.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-lua" data-lang="lua"><span style="display:flex;"><span><span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">createPythonCodeString</span>()
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">local</span> lines <span style="color:#f92672">=</span> vim.api.nvim_buf_get_lines(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#66d9ef">false</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">local</span> filtered_content <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> _, line <span style="color:#66d9ef">in</span> ipairs(lines) <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> string.len(line) <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">and</span> string.sub(line, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">5</span>) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;main(&#34;</span> <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">goto</span> continue
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>    table.insert(filtered_content, line)
+</span></span><span style="display:flex;"><span>    ::continue::
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  table.insert(filtered_content, <span style="color:#e6db74">&#34;def ___main___():&#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">local</span> selectLines <span style="color:#f92672">=</span> util.get_visual_selection_content()
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">local</span> fix <span style="color:#f92672">=</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> i, line <span style="color:#66d9ef">in</span> ipairs(selectLines) <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> i <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">local</span> count <span style="color:#f92672">=</span> tabCount(line)
+</span></span><span style="display:flex;"><span>      fix <span style="color:#f92672">=</span> fix <span style="color:#f92672">-</span> count
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> string.len(line) <span style="color:#f92672">&gt;=</span> count <span style="color:#f92672">+</span> <span style="color:#ae81ff">4</span> <span style="color:#f92672">and</span> string.sub(line, count <span style="color:#f92672">+</span> <span style="color:#ae81ff">1</span>, count <span style="color:#f92672">+</span> <span style="color:#ae81ff">4</span>) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;def &#34;</span> <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>        fix <span style="color:#f92672">=</span> fix <span style="color:#f92672">-</span> <span style="color:#ae81ff">1</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">goto</span> continue
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> fix <span style="color:#f92672">&gt;</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>      table.insert(filtered_content, <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\t</span><span style="color:#e6db74">&#34;</span> <span style="color:#f92672">..</span> line)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">elseif</span> fix <span style="color:#f92672">&lt;</span> <span style="color:#ae81ff">0</span> <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>      table.insert(filtered_content, string.sub(line, <span style="color:#f92672">-</span>fix))
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">else</span>
+</span></span><span style="display:flex;"><span>      table.insert(filtered_content, line)
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>    ::continue::
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  table.insert(filtered_content, <span style="color:#e6db74">&#34;___main___()&#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">local</span> codestring <span style="color:#f92672">=</span> table.concat(filtered_content, <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> codestring
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><h3 id="javascript和typescript">javascript和typescript</h3>
+<p>js和python类似的,都是通过前5个字符为main(来判断main函数的调用.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-lua" data-lang="lua"><span style="display:flex;"><span><span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">createJsCodeString</span>()
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">local</span> lines <span style="color:#f92672">=</span> vim.api.nvim_buf_get_lines(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#66d9ef">false</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">local</span> filtered_content <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> _, line <span style="color:#66d9ef">in</span> ipairs(lines) <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> string.len(line) <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">and</span> string.sub(line, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">5</span>) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;main(&#34;</span> <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">goto</span> continue
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>    table.insert(filtered_content, line)
+</span></span><span style="display:flex;"><span>    ::continue::
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  table.insert(filtered_content, <span style="color:#e6db74">&#34;function ___main___(){&#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">local</span> selectLines <span style="color:#f92672">=</span> util.get_visual_selection_content()
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> i, line <span style="color:#66d9ef">in</span> ipairs(selectLines) <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> i <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> string.find(line, <span style="color:#e6db74">&#34;function &#34;</span>) <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">goto</span> continue
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> i <span style="color:#f92672">==</span> <span style="color:#f92672">#</span>selectLines <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> line:sub(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">1</span>) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;}&#34;</span> <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">goto</span> continue
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>    table.insert(filtered_content, line)
+</span></span><span style="display:flex;"><span>    ::continue::
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  table.insert(filtered_content, <span style="color:#e6db74">&#34;}&#34;</span>)
+</span></span><span style="display:flex;"><span>  table.insert(filtered_content, <span style="color:#e6db74">&#34;___main___()&#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">local</span> codestring <span style="color:#f92672">=</span> table.concat(filtered_content, <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> codestring
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><h3 id="lua">lua</h3>
+<p>lua有一点点不一样, 我目前写lua主要在neovim中写, 不用它作为通用的编程语言, 除了去掉main函数的调用以外,
+还需要去掉在lua的模块中的return语句. 否则添加到后面的代码都被return掉了.</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-lua" data-lang="lua"><span style="display:flex;"><span><span style="color:#66d9ef">local</span> <span style="color:#66d9ef">function</span> <span style="color:#a6e22e">createLuaCodeString</span>()
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">local</span> filtered_content <span style="color:#f92672">=</span> {}
+</span></span><span style="display:flex;"><span>  table.insert(filtered_content, <span style="color:#e6db74">&#34;-- vim&#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">local</span> lines <span style="color:#f92672">=</span> vim.api.nvim_buf_get_lines(<span style="color:#ae81ff">0</span>, <span style="color:#ae81ff">0</span>, <span style="color:#f92672">-</span><span style="color:#ae81ff">1</span>, <span style="color:#66d9ef">false</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> _, line <span style="color:#66d9ef">in</span> ipairs(lines) <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> string.len(line) <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">5</span> <span style="color:#f92672">and</span> string.sub(line, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">5</span>) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;main(&#34;</span> <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">goto</span> continue
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> string.len(line) <span style="color:#f92672">&gt;=</span> <span style="color:#ae81ff">6</span> <span style="color:#f92672">and</span> string.sub(line, <span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">6</span>) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;return&#34;</span> <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">break</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>    table.insert(filtered_content, line)
+</span></span><span style="display:flex;"><span>    ::continue::
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  table.insert(filtered_content, <span style="color:#e6db74">&#34;local function ___main___()&#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">local</span> selectLines <span style="color:#f92672">=</span> util.get_visual_selection_content()
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">for</span> i, line <span style="color:#66d9ef">in</span> ipairs(selectLines) <span style="color:#66d9ef">do</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> i <span style="color:#f92672">==</span> <span style="color:#ae81ff">1</span> <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> string.find(line, <span style="color:#e6db74">&#34;function &#34;</span>) <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">goto</span> continue
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">if</span> i <span style="color:#f92672">==</span> <span style="color:#f92672">#</span>selectLines <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">if</span> line:sub(<span style="color:#ae81ff">1</span>, <span style="color:#ae81ff">3</span>) <span style="color:#f92672">==</span> <span style="color:#e6db74">&#34;end&#34;</span> <span style="color:#66d9ef">then</span>
+</span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">goto</span> continue
+</span></span><span style="display:flex;"><span>      <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>    table.insert(filtered_content, line)
+</span></span><span style="display:flex;"><span>    ::continue::
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">end</span>
+</span></span><span style="display:flex;"><span>  table.insert(filtered_content, <span style="color:#e6db74">&#34;end&#34;</span>)
+</span></span><span style="display:flex;"><span>  table.insert(filtered_content, <span style="color:#e6db74">&#34;___main___()&#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">local</span> codestring <span style="color:#f92672">=</span> table.concat(filtered_content, <span style="color:#e6db74">&#34;</span><span style="color:#ae81ff">\n</span><span style="color:#e6db74">&#34;</span>)
+</span></span><span style="display:flex;"><span>  <span style="color:#66d9ef">return</span> codestring
+</span></span><span style="display:flex;"><span><span style="color:#66d9ef">end</span>
+</span></span></code></pre></div><h2 id="其他">其他</h2>
+<p>上面的几个语言是我最经常用的动态语言,因为动态语言写法千奇百怪, 所以可能有一些情况没法覆盖到, 一个常见的就是运行闭包内的函数.
+很还有一些我不常用的lisp系语言如haskell.</p>
+
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+  
+
+
+
+        </main><footer class="site-footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="site-footer-logo"><a href="https://soluty.cc/"><img src="https://soluty.cc/images/image.png" alt="logo-footer"></a></div>
+      </div>
+      
+      <div class="col-lg-3 col-md-6">
+        <div class="site-footer-widget">
+          <h5 class="site-footer-widget-title">联系方式</h5>
+          <p class="site-footer-widget-description">
+	    
+	    
+              <a href="tel:13366151144">13366151144</a>
+              <br>
+	    
+	    
+              <a href="mailto:soluty.lv@qq.com">soluty.lv@qq.com</a>
+	    
+          </p>
+        </div>
+      </div>
+      
+      
+      <div class="col-lg-2 col-md-6">
+        <div class="site-footer-widget">
+          <h5 class="site-footer-widget-title">导航</h5>
+          <ul class="site-footer-widget-links">
+            
+            <li><a href="https://soluty.cc/about">关于</a></li>
+            
+            <li><a href="https://soluty.cc/portfolio">项目</a></li>
+            
+            <li><a href="https://soluty.cc/blog">博客</a></li>
+            
+            <li><a href="https://soluty.cc/contact">联系我</a></li>
+            
+          </ul>
+        </div>
+      </div>
+      
+      
+      <div class="col-lg-2 col-md-6">
+        <div class="site-footer-widget">
+          <h5 class="site-footer-widget-title">社交媒体</h5>
+          <ul class="site-footer-widget-links">
+            
+              <li><a href="#">微信</a></li>
+            
+              <li><a href="#">知乎</a></li>
+            
+          </ul>
+        </div>
+      </div>
+      
+      
+      <div class="col-lg-3 col-md-6">
+        <div class="site-footer-widget">
+          <h5 class="site-footer-widget-title">我能做:</h5>
+          <p class="site-footer-widget-description">
+            竭尽所能为您的伟大创意提供完美solution
+          </p>
+        </div>
+      </div>
+      
+      <div class="col-lg-2 col-12">
+        <a href="#top" class="site-footer-widget-top">
+          <img src="https://soluty.cc/images/to-top.svg" alt="back-to-top">
+          <p>
+	    返回
+          </p>
+        </a>
+      </div>
+      <div class="col-12">
+        <div class="site-footer-copyright">
+          <p>© Copyright 2023 - All Rights Reserved by Soluty </p>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+</footer>
+
+
+
+<script src="https://soluty.cc/js/vendor.min.js"></script>
+
+<script src="https://soluty.cc/js/script.min.js"></script>
+</body>
+</html>
