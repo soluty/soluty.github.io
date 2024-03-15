@@ -141,11 +141,11 @@ hasCJKLanguage = true
       [params.footer.social]
         title   = "社交媒体"
         [[params.footer.social.link]]
-          name = "微信"
-          url  = "#"
-        [[params.footer.social.link]]
-          name = "知乎"
-          url  = "#"
+          name = "微信号(soluty68)"
+          url  = "weixin://add/soluty68"
+        # [[params.footer.social.link]]
+        #   name = "知乎"
+        #   url  = "#"
       # Footer Service
       [params.footer.service]
         title       = "我能做:"
